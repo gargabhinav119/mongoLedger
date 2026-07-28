@@ -1,5 +1,6 @@
 // ── API BASE URL ────────────────────────────────────
-const API_BASE_URL = 'https://mongoledger.onrender.com/';
+// ✅ SAHI - No trailing slash
+const API_BASE_URL = 'https://mongoledger.onrender.com';
 
 // ── GET TOKEN ────────────────────────────────────────
 function getToken() {
@@ -102,8 +103,6 @@ async function apiGetShops(adminToken) {
   return res.json();
 }
 
-// ─── DEACTIVATE SHOP ────────────────────────────────
-// ✅ YAHI HAI DEACTIVATE API CALL
 async function apiDeleteShop(shopId, adminToken) {
   const res = await fetch(`${API_BASE_URL}/api/admin/shops/${shopId}`, {
     method: 'DELETE',
@@ -116,8 +115,6 @@ async function apiDeleteShop(shopId, adminToken) {
   return res.json();
 }
 
-// ─── REACTIVATE SHOP ────────────────────────────────
-// ✅ YEH BHI ADD KARO (Reactivate ke liye)
 async function apiReactivateShop(shopId, adminToken) {
   const res = await fetch(`${API_BASE_URL}/api/admin/shops/${shopId}/reactivate`, {
     method: 'PUT',

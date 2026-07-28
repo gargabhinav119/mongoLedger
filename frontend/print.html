@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ledger Print</title>
+    <script src="api.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .printBtn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: #1a1a2e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 999;
+        }
+        .printBtn:hover {
+            background: #2d2d4a;
+        }
+        .sheet {
+            width: 210mm;
+            min-height: 297mm;
+            margin: auto;
+            background: #fff;
+            padding: 28px 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1a1a2e;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .shop h1 {
+            font-size: 28px;
+            color: #1a1a2e;
+        }
+        .shop p {
+            font-size: 13px;
+            color: #666;
+            margin-top: 2px;
+        }
+        .statement {
+            text-align: right;
+            font-size: 14px;
+            color: #444;
+        }
+        .statement h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .box {
+            border: 1px solid #ddd;
+            padding: 12px 16px;
+            border-radius: 6px;
+            background: #fafbfc;
+        }
+        .box h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #1a1a2e;
+        }
+        .box p {
+            margin: 4px 0;
+            font-size: 13px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .card {
+            border: 1px solid #dce1e8;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            background: #fafbfc;
+        }
+        .card h4 {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card h2 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .card .dr {
+            color: #c0392b;
+        }
+        .card .cr {
+            color: #27ae60;
+        }
+        .card .net {
+            color: #1a1a2e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+        th {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 8px 8px;
+            text-align: left;
+            border: 1px solid #1a1a2e;
+        }
+        td {
+            padding: 7px 8px;
+            border: 1px solid #dce1e8;
+            vertical-align: middle;
+        }
+        tr:nth-child(even) {
+            background: #f7f9fc;
+        }
+        .right {
+            text-align: right;
+        }
+        .center {
+            text-align: center;
+        }
+        .item-detail {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .item-detail hr {
+            margin: 3px 0;
+            border: 0;
+            border-top: 1px dashed #dce1e8;
+        }
+        .footer {
+            margin-top: 24px;
+            padding-top: 12px;
+            border-top: 2px solid #e0e5ec;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #777;
+        }
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .printBtn {
+                display: none !important;
+            }
+            .sheet {
+                box-shadow: none !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                padding: 16px 20px !important;
+            }
+            .box {
+                background: #fafbfc !important;
+            }
+            .card {
+                background: #fafbfc !important;
+            }
+            tr:nth-child(even) {
+                background: #f7f9fc !important;
+            }
+            th {
+                background: #1a1a2e !important;
+                color: #fff !important;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .sheet {
+                width: 100%;
+                padding: 14px;
+            }
+            .info {
+                grid-template-columns: 1fr;
+            }
+            .summary {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .statement {
+                text-align: left;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="printBtn" onclick="window.print()">🖨 Print</button>
+
+    <div id="page">Loading...</div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const customerId = params.get("id");
+
+        let appData = {};
+        let customer = null;
+
+        function formatAmount(n) {
+            return "₹" + Math.abs(Number(n || 0)).toLocaleString("en-IN", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatDate(d) {
+            if (!d) return "-";
+            return new Date(d).toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+        }
+
+        function getBalance(cust) {
+            const entries = cust.entries || [];
+            const debit = entries.filter(e => e.type === "debit").reduce((s, e) => s + Number(e.amount), 0);
+            const credit = entries.filter(e => e.type === "credit").reduce((s, e) => s + Number(e.amount), 0);
+            return { debit, credit, net: debit - credit };
+        }
+
+        async function initPrint() {
+            try {
+                appData = await apiGetData();
+                customer = appData.customers.find(c => c.id === customerId);
+                if (!customer) {
+                    document.getElementById("page").innerHTML = "<h2>Customer not found.</h2>";
+                    return;
+                }
+                renderPrint();
+            } catch (err) {
+                document.getElementById("page").innerHTML = "<h2>Unable to load data.</h2>";
+            }
+        }
+
+        function renderPrint() {
+            const bal = getBalance(customer);
+            const entries = (customer.entries || []).slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            let rows = "";
+            entries.forEach((e, index) => {
+                let particular = "";
+                let remarks = e.remarks || e.note || e.comment || "";
+                
+                if (e.items && e.items.length) {
+                    particular = e.items.map(item => {
+                        const qty = item.qtyDisplay || `${item.qty}${item.unit || ""}`;
+                        return `<div class="item-detail"><b>${item.name}</b> (${qty} × ₹${Number(item.rate).toFixed(2)})</div>`;
+                    }).join("<hr>");
+                } else {
+                    particular = e.particular || "-";
+                }
+
+                rows += `
+                    <tr>
+                        <td class="center">${index + 1}</td>
+                        <td>${formatDate(e.date)}</td>
+                        <td>${particular}</td>
+                        <td>${remarks || "-"}</td>
+                        <td class="right">${e.type === "debit" ? formatAmount(e.amount) : ""}</td>
+                        <td class="right">${e.type === "credit" ? formatAmount(e.amount) : ""}</td>
+                        <td class="center">${e.mode || "-"}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById("page").innerHTML = `
+                <div class="sheet">
+                    <div class="header">
+                        <div class="shop">
+                            <h1>बही खाता</h1>
+                            <p>Customer Ledger Statement</p>
+                        </div>
+                        <div class="statement">
+                            <h2>Statement</h2>
+                            <p>${new Date().toLocaleDateString("en-IN")}</p>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <div class="box">
+                            <h3>👤 Customer Details</h3>
+                            <p><b>Name :</b> ${customer.name}</p>
+                            <p><b>ID :</b> ${customer.id}</p>
+                            <p><b>Created :</b> ${formatDate(customer.createdAt)}</p>
+                        </div>
+                        <div class="box">
+                            <h3>📊 Account Summary</h3>
+                            <p><b>Total Entries :</b> ${entries.length}</p>
+                            <p><b>Status :</b> ${bal.net > 0 ? "🔴 Due" : bal.net < 0 ? "🟢 Advance" : "⚪ Settled"}</p>
+                            <p><b>Balance :</b> ${formatAmount(bal.net)}</p>
+                        </div>
+                    </div>
+
+                    <div class="summary">
+                        <div class="card">
+                            <h4>Total Debit</h4>
+                            <h2 class="dr">${formatAmount(bal.debit)}</h2>
+                        </div>
+                        <div class="card">
+                            <h4>Total Credit</h4>
+                            <h2 class="cr">${formatAmount(bal.credit)}</h2>
+                        </div>
+                        <div class="card">
+                            <h4>Net Balance</h4>
+                            <h2 class="net">${formatAmount(bal.net)}</h2>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:40px;">#</th>
+                                <th style="width:100px;">Date</th>
+                                <th>Particular</th>
+                                <th style="width:120px;">Remarks</th>
+                                <th style="width:100px;">Debit</th>
+                                <th style="width:100px;">Credit</th>
+                                <th style="width:90px;">Mode</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div>Generated by <b>बही खाता</b></div>
+                        <div>Printed on ${new Date().toLocaleString("en-IN")}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        initPrint();
+    </script>
+
+</body>
+</html>

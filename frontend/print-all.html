@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete Ledger - बही खाता</title>
+    <script src="api.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #eef1f5;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 10px;
+        }
+        .print-btn {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            background: #1a1a2e;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+        }
+        .print-btn:hover {
+            background: #16213e;
+        }
+        .sheet {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 15px auto;
+            background: #ffffff;
+            padding: 12px 16px 10px 16px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+            border-radius: 3px;
+        }
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1e2a3a;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .report-header .brand h1 {
+            font-size: 22px;
+            color: #1a1a2e;
+            letter-spacing: 0.3px;
+        }
+        .report-header .brand p {
+            font-size: 11px;
+            color: #666;
+            margin-top: 0px;
+        }
+        .report-header .meta {
+            text-align: right;
+            font-size: 11px;
+            color: #444;
+            line-height: 1.4;
+        }
+        .report-header .meta .date {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .top-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .top-summary .card {
+            background: #f7f9fc;
+            border: 1px solid #dce1e8;
+            border-radius: 4px;
+            padding: 6px 4px;
+            text-align: center;
+        }
+        .top-summary .card h4 {
+            font-size: 9px;
+            font-weight: 600;
+            color: #666;
+            letter-spacing: 0.2px;
+            margin-bottom: 2px;
+        }
+        .top-summary .card .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .top-summary .card .value.dr { color: #c0392b; }
+        .top-summary .card .value.cr { color: #27ae60; }
+        .top-summary .card .value.net { color: #1a1a2e; }
+
+        .customer-block {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 2px dashed #d0d7e2;
+        }
+        .customer-block:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .customer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0f3f8;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            border-left: 4px solid #1a2a3a;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .customer-header .name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .customer-header .id {
+            font-size: 10px;
+            color: #666;
+            margin-left: 6px;
+        }
+        .customer-header .status {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+        .status.due { background: #fde8e8; color: #b71c1c; }
+        .status.advance { background: #e3f5ec; color: #1a7a42; }
+        .status.settled { background: #e3edfa; color: #1a4a7a; }
+
+        .cust-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .cust-summary .card {
+            border: 1px solid #dce1e8;
+            border-radius: 4px;
+            padding: 4px 6px;
+            text-align: center;
+            background: #fafbfd;
+        }
+        .cust-summary .card h5 {
+            font-size: 8px;
+            font-weight: 600;
+            color: #777;
+            letter-spacing: 0.2px;
+            margin-bottom: 1px;
+        }
+        .cust-summary .card .val {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .cust-summary .card .val.dr { color: #c0392b; }
+        .cust-summary .card .val.cr { color: #27ae60; }
+        .cust-summary .card .val.net { color: #1a1a2e; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        table thead th {
+            background: #1e2a3a;
+            color: #fff;
+            font-weight: 600;
+            padding: 4px 4px;
+            border: 1px solid #1e2a3a;
+            text-align: left;
+        }
+        table thead th.right { text-align: right; }
+        table thead th.center { text-align: center; }
+        table tbody td {
+            padding: 3px 4px;
+            border: 1px solid #dce1e8;
+            vertical-align: middle;
+        }
+        table tbody td.right { text-align: right; }
+        table tbody td.center { text-align: center; }
+        table tbody tr:nth-child(even) {
+            background: #f7f9fc;
+        }
+        /* Items ab ek line me aayenge, isliye extra styling ki zaroorat nahi */
+        .item-detail {
+            font-size: 9px;
+            line-height: 1.2;
+        }
+
+        .page-footer {
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px solid #e0e5ec;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #777;
+        }
+        .page-footer .page-num {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .customer-divider {
+            margin: 16px 0 10px 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #1a2a3a, #1a2a3a, #1a2a3a, transparent);
+            border-radius: 2px;
+            position: relative;
+        }
+        .customer-divider::after {
+            content: "◆ ◆ ◆";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            padding: 0 12px;
+            color: #1a2a3a;
+            font-size: 9px;
+            letter-spacing: 5px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+                margin: 0;
+            }
+            .print-btn { display: none !important; }
+            .sheet {
+                box-shadow: none !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                padding: 8px 12px 6px 12px !important;
+                border-radius: 0 !important;
+            }
+            .top-summary .card {
+                background: #f7f9fc !important;
+                border: 1px solid #dce1e8 !important;
+            }
+            .cust-summary .card {
+                background: #fafbfd !important;
+                border: 1px solid #dce1e8 !important;
+            }
+            .customer-header {
+                background: #f0f3f8 !important;
+                border-left-color: #1a2a3a !important;
+            }
+            table thead th {
+                background: #1e2a3a !important;
+                color: #fff !important;
+            }
+            table tbody tr:nth-child(even) {
+                background: #f7f9fc !important;
+            }
+            thead { display: table-header-group; }
+            tr { page-break-inside: avoid; }
+            .customer-divider::after {
+                background: #ffffff !important;
+            }
+            .customer-divider {
+                margin: 10px 0 6px 0 !important;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            .sheet { width: 100%; padding: 10px; }
+            .top-summary { grid-template-columns: 1fr 1fr; }
+            .cust-summary { grid-template-columns: 1fr 1fr; }
+            .report-header { flex-direction: column; align-items: flex-start; }
+            .report-header .meta { text-align: left; width: 100%; }
+        }
+        @media screen and (max-width: 500px) {
+            .top-summary { grid-template-columns: 1fr; }
+            .cust-summary { grid-template-columns: 1fr; }
+            .customer-header { flex-direction: column; align-items: flex-start; }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #555;
+        }
+        .empty-state h2 { font-size: 20px; margin-bottom: 6px; }
+        .empty-state p { color: #888; font-size: 13px; }
+        .loading {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨 Print</button>
+
+    <div id="page" class="loading">Loading ...</div>
+
+    <script>
+        function formatAmount(n) {
+            const val = Number(n || 0);
+            const sign = val < 0 ? '-' : '';
+            return sign + '₹' + Math.abs(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatDate(d) {
+            if (!d) return '-';
+            return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function formatDateTime(d) {
+            if (!d) return '-';
+            const dt = new Date(d);
+            return dt.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                ' ' + dt.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function getCustomerBalance(cust) {
+            const entries = cust.entries || [];
+            let debit = 0, credit = 0;
+            for (const e of entries) {
+                const amt = Number(e.amount) || 0;
+                if (e.type === 'debit') debit += amt;
+                else if (e.type === 'credit') credit += amt;
+            }
+            return { debit, credit, net: debit - credit };
+        }
+
+        function calcRunningBalance(entries) {
+            let running = 0;
+            return entries.map(e => {
+                const amt = Number(e.amount) || 0;
+                if (e.type === 'debit') running += amt;
+                else if (e.type === 'credit') running -= amt;
+                return { ...e, runningBalance: running };
+            });
+        }
+
+        function renderTopSummary(customers) {
+            let totalDebit = 0, totalCredit = 0;
+            for (const c of customers) {
+                const b = getCustomerBalance(c);
+                totalDebit += b.debit;
+                totalCredit += b.credit;
+            }
+            return `
+                <div class="top-summary">
+                    <div class="card"><h4>Total Customers</h4><div class="value">${customers.length}</div></div>
+                    <div class="card"><h4>Total Debit</h4><div class="value dr">${formatAmount(totalDebit)}</div></div>
+                    <div class="card"><h4>Total Credit</h4><div class="value cr">${formatAmount(totalCredit)}</div></div>
+                    <div class="card"><h4>Overall Balance</h4><div class="value net">${formatAmount(totalDebit - totalCredit)}</div></div>
+                </div>
+            `;
+        }
+
+        // ✅ CHANGE YAHAN HUA HAI - Items ab ek line mein vertical bar se separate
+        function renderParticular(e) {
+            if (e.items && e.items.length) {
+                // Sabhi items ko ek line me vertical bar (|) se separate karke
+                return e.items.map(item => {
+                    const qty = item.qtyDisplay || (item.qty + (item.unit || ''));
+                    return `${item.name} (${qty} × ₹${Number(item.rate).toFixed(2)})`;
+                }).join(' | ');
+            }
+            return e.particular || '-';
+        }
+
+        function renderCustomerTable(entries) {
+            if (!entries || !entries.length) return `<p style="margin:6px 0;color:#999;font-size:10px;">No transactions</p>`;
+            const sorted = [...entries].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const withBal = calcRunningBalance(sorted);
+            let rows = '';
+            let idx = 0;
+            for (const e of withBal) {
+                idx++;
+                rows += `
+                    <tr>
+                        <td class="center">${idx}</td>
+                        <td>${formatDate(e.date)}</td>
+                        <td><span class="item-detail">${renderParticular(e)}</span></td>
+                        <td class="right">${e.type === 'debit' ? formatAmount(e.amount) : ''}</td>
+                        <td class="right">${e.type === 'credit' ? formatAmount(e.amount) : ''}</td>
+                        <td class="right">${formatAmount(e.runningBalance)}</td>
+                        <td class="center">${e.mode || '-'}</td>
+                    </tr>
+                `;
+            }
+            return `
+                <table>
+                    <thead><tr>
+                        <th class="center" style="width:32px;">#</th>
+                        <th style="width:75px;">Date</th>
+                        <th>Particular</th>
+                        <th class="right" style="width:80px;">Debit</th>
+                        <th class="right" style="width:80px;">Credit</th>
+                        <th class="right" style="width:90px;">Running Bal.</th>
+                        <th class="center" style="width:70px;">Mode</th>
+                    </tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        function renderCustomerBlock(cust, isFirst) {
+            const bal = getCustomerBalance(cust);
+            const entries = cust.entries || [];
+            const statusText = bal.net > 0 ? 'Due' : bal.net < 0 ? 'Advance' : 'Settled';
+            const statusClass = statusText.toLowerCase();
+
+            const headerHtml = `
+                <div class="customer-header">
+                    <div>
+                        <span class="name">${cust.name}</span>
+                        <span class="id">ID: ${cust.id}</span>
+                        <span style="font-size:9px;color:#777;margin-left:6px;">Entries: ${entries.length}</span>
+                    </div>
+                    <span class="status ${statusClass}">${statusText}</span>
+                </div>
+            `;
+
+            const summaryHtml = `
+                <div class="cust-summary">
+                    <div class="card"><h5>Total Debit</h5><div class="val dr">${formatAmount(bal.debit)}</div></div>
+                    <div class="card"><h5>Total Credit</h5><div class="val cr">${formatAmount(bal.credit)}</div></div>
+                    <div class="card"><h5>Net Balance</h5><div class="val net">${formatAmount(bal.net)}</div></div>
+                </div>
+            `;
+
+            const tableHtml = renderCustomerTable(entries);
+            const dividerHtml = isFirst ? '' : '<hr class="customer-divider">';
+
+            return `
+                ${dividerHtml}
+                <div class="customer-block">
+                    ${headerHtml}
+                    ${summaryHtml}
+                    ${tableHtml}
+                </div>
+            `;
+        }
+
+        function renderAllCustomers(customers) {
+            if (!customers || !customers.length) {
+                return `<div class="sheet"><div class="empty-state"><h2>📭 No Customers</h2><p>Add customers from the dashboard.</p></div></div>`;
+            }
+
+            const now = new Date();
+            const printDate = formatDateTime(now);
+
+            let html = `
+                <div class="sheet">
+                    <div class="report-header">
+                        <div class="brand">
+                            <h1>बही खाता</h1>
+                            <p>Complete Ledger Report</p>
+                        </div>
+                        <div class="meta">
+                            <div class="date">${formatDate(now)}</div>
+                            <div style="font-size:10px;color:#888;">Print: ${printDate}</div>
+                        </div>
+                    </div>
+                    ${renderTopSummary(customers)}
+                    <div style="margin:12px 0 6px 0;text-align:center;color:#aaa;font-size:11px;border-top:1px solid #e0e5ec;padding-top:10px;">
+                        — Customer-wise Ledger —
+                    </div>
+            `;
+
+            for (let i = 0; i < customers.length; i++) {
+                const cust = customers[i];
+                html += renderCustomerBlock(cust, i === 0);
+            }
+
+            html += `
+                    <div class="page-footer">
+                        <div>बही खाता</div>
+                        <div class="page-num">Page 1</div>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
+        async function init() {
+            const pageEl = document.getElementById('page');
+            try {
+                const appData = await apiGetData();
+                pageEl.innerHTML = renderAllCustomers(appData.customers || []);
+            } catch (err) {
+                console.error(err);
+                pageEl.innerHTML = `
+                    <div class="sheet">
+                        <div class="empty-state">
+                            <h2>⚠️ Error</h2>
+                            <p>${err.message || 'Unable to load data.'}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        init();
+    </script>
+
+</body>
+</html>

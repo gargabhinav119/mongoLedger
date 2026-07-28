@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>बही खाता - Admin</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;500;600;700&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#1a1209; --card:#2a1f0f; --card2:#241a0c; --border:#5a3e1b;
+      --gold:#c9923f; --gold-light:#e8b96a;
+      --text:#f0dfc0; --text-muted:#9a8060;
+      --red:#e05555; --green:#4caf7d;
+      --input-bg:#1f1608;
+    }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; padding:20px; }
+    .container { max-width:900px; margin:0 auto; }
+    .header { background:var(--card); border:1.5px solid var(--border); border-radius:12px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+    .header-title { font-family:'Tiro Devanagari Hindi',serif; font-size:1.6rem; color:var(--gold-light); }
+    .header-sub { font-size:0.8rem; color:var(--text-muted); }
+    .btn { border-radius:8px; padding:9px 18px; font-size:0.85rem; font-weight:600; cursor:pointer; border:1.5px solid; display:flex; align-items:center; gap:6px; transition:all 0.15s; font-family:'Inter',sans-serif; }
+    .btn-gold { background:var(--gold); color:#1a1209; border-color:var(--gold); }
+    .btn-gold:hover { background:var(--gold-light); }
+    .btn-outline { background:transparent; color:var(--text); border-color:var(--border); }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-danger { background:var(--red); color:#fff; border-color:var(--red); }
+    .btn-danger:hover { opacity:0.85; }
+    .btn-success { background:var(--green); color:#fff; border-color:var(--green); }
+    .btn-success:hover { opacity:0.85; }
+    .card { background:var(--card2); border:1.5px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
+    .card h3 { font-family:'Tiro Devanagari Hindi',serif; color:var(--gold-light); margin-bottom:16px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-group { margin-bottom:14px; }
+    .form-label { display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px; }
+    .form-input { width:100%; background:var(--input-bg); border:1.5px solid var(--border); border-radius:8px; padding:10px 13px; color:var(--text); font-size:0.9rem; font-family:'Inter',sans-serif; outline:none; transition:border-color 0.2s; }
+    .form-input:focus { border-color:var(--gold); }
+    .form-input::placeholder { color:var(--text-muted); }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:10px 12px; font-size:0.78rem; font-weight:600; color:var(--text-muted); text-align:left; border-bottom:2px solid var(--border); }
+    td { padding:10px 12px; font-size:0.85rem; color:var(--text); border-bottom:1px solid rgba(90,62,27,0.3); }
+    .status-active { color:var(--green); }
+    .status-inactive { color:var(--red); }
+    .empty { text-align:center; color:var(--text-muted); padding:30px 0; }
+    .actions-cell { display:flex; gap:6px; flex-wrap:wrap; }
+    .toast { position:fixed; bottom:28px; right:28px; background:var(--card); border:1.5px solid var(--green); border-radius:10px; padding:12px 20px; color:var(--green); font-size:0.88rem; display:flex; align-items:center; gap:8px; z-index:999; transform:translateY(80px); opacity:0; transition:all 0.3s ease; max-width:320px; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast.error { border-color:var(--red); color:var(--red); }
+    @media (max-width:700px) { .form-row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <div class="header-title">🛠️ Admin Panel</div>
+        <div class="header-sub">बही खाता — Shop Management</div>
+      </div>
+      <div>
+        <button class="btn btn-outline" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="card">
+      <h3>🔐 Admin Login</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input class="form-input" type="text" id="adminUsername" placeholder="admin"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" id="adminPassword" placeholder="••••"/>
+        </div>
+      </div>
+      <button class="btn btn-gold" onclick="adminLogin()">Login</button>
+    </div>
+
+    <!-- ADMIN CONTENT -->
+    <div id="adminContent" style="display:none;">
+      <!-- Create Shop -->
+      <div class="card">
+        <h3>🏪 Create New Shop</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Shop Name *</label>
+            <input class="form-input" type="text" id="shopName" placeholder="e.g. Ramesh Kirana Store"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input class="form-input" type="tel" id="shopPhone" placeholder="9876543210" maxlength="10"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input class="form-input" type="text" id="shopPassword" placeholder="min 4 characters"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">GST Number</label>
+            <input class="form-input" type="text" id="shopGst" placeholder="Optional"/>
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label">Address</label>
+            <input class="form-input" type="text" id="shopAddress" placeholder="Optional"/>
+          </div>
+        </div>
+        <button class="btn btn-gold" onclick="createShop()">➕ Create Shop</button>
+      </div>
+
+      <!-- List Shops -->
+      <div class="card">
+        <h3>📋 All Shops</h3>
+        <div id="shopsList">
+          <div class="empty">Loading shops...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastMsg"></span>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    let adminToken = null;
+
+    function init() {
+      const token = sessionStorage.getItem('bk_admin_token');
+      if (token) {
+        adminToken = token;
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        loadShops();
+      }
+    }
+
+    // ─── ADMIN LOGIN ──────────────────────────────────
+    async function adminLogin() {
+      const username = document.getElementById('adminUsername').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+
+      if (!username || !password) {
+        showToast('Username aur password darj karein', true);
+        return;
+      }
+
+      try {
+        const result = await apiAdminLogin(username, password);
+        if (result.success && result.token) {
+          adminToken = result.token;
+          sessionStorage.setItem('bk_admin_token', adminToken);
+          document.getElementById('loginSection').style.display = 'none';
+          document.getElementById('adminContent').style.display = 'block';
+          showToast('✅ Admin login successful!');
+          loadShops();
+        }
+      } catch (error) {
+        showToast('❌ ' + error.message, true);
+      }
+    }
+
+    // ─── CREATE SHOP ──────────────────────────────────
+    async function createShop() {
+      const shopName = document.getElementById('shopName').value.trim();
+      const phone = document.getElementById('shopPhone').value.trim();
+      const password = document.getElementById('shopPassword').value.trim();
+      const gstNo = document.getElementById('shopGst').value.trim();
+      const address = document.getElementById('shopAddress').value.trim();
+
+      if (!shopName || !phone || !password) {
+        showToast('Shop name, phone aur password zaroori hain', true);
+        return;
+      }
+
+      if (phone.length !== 10) {
+        showToast('Phone number 10 digit ka hona chahiye', true);
+        return;
+      }
+
+      if (password.length < 4) {
+        showToast('Password at least 4 characters hona chahiye', true);
+        return;
+      }
+
+      try {
+        const result = await apiCreateShop({ shopName, phone, password, gstNo, address }, adminToken);
+        if (result.success) {
+          showToast('✅ Shop created successfully!');
+          document.getElementById('shopName').value = '';
+          document.getElementById('shopPhone').value = '';
+          document.getElementById('shopPassword').value = '';
+          document.getElementById('shopGst').value = '';
+          document.getElementById('shopAddress').value = '';
+          loadShops();
+        }
+      } catch (error) {
+        showToast('❌ ' + error.message, true);
+      }
+    }
+
+    // ─── LOAD SHOPS ───────────────────────────────────
+    async function loadShops() {
+      try {
+        const result = await apiGetShops(adminToken);
+        const shops = result.shops || [];
+        const list = document.getElementById('shopsList');
+
+        if (!shops.length) {
+          list.innerHTML = '<div class="empty">No shops created yet.</div>';
+          return;
+        }
+
+        list.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Shop Name</th>
+                <th>Phone</th>
+                <th>GST</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${shops.map((shop, i) => `
+                <tr>
+                  <td>${i+1}</td>
+                  <td>${shop.shopName}</td>
+                  <td>${shop.phone}</td>
+                  <td>${shop.gstNo || '—'}</td>
+                  <td class="${shop.active ? 'status-active' : 'status-inactive'}">${shop.active ? '✅ Active' : '❌ Inactive'}</td>
+                  <td>
+                    <div class="actions-cell">
+                      ${shop.active 
+                        ? `<button class="btn btn-danger" onclick="deleteShop('${shop._id}')">🔴 Deactivate</button>` 
+                        : `<button class="btn btn-success" onclick="reactivateShop('${shop._id}')">🟢 Activate</button>`
+                      }
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (error) {
+        document.getElementById('shopsList').innerHTML = `<div class="empty">❌ ${error.message}</div>`;
+      }
+    }
+
+    // ─── DEACTIVATE SHOP ─────────────────────────────
+    // ✅ YEH FUNCTION CALL KARTA HAI apiDeleteShop()
+    async function deleteShop(shopId) {
+      if (!shopId) {
+        showToast('Shop ID not found!', true);
+        return;
+      }
+      
+      if (!confirm('Are you sure you want to deactivate this shop?')) return;
+
+      try {
+        await apiDeleteShop(shopId, adminToken);
+        showToast('✅ Shop deactivated successfully!');
+        loadShops();
+      } catch (error) {
+        showToast('❌ ' + error.message, true);
+      }
+    }
+
+    // ─── REACTIVATE SHOP ─────────────────────────────
+    // ✅ YEH FUNCTION CALL KARTA HAI apiReactivateShop()
+    async function reactivateShop(shopId) {
+      if (!shopId) {
+        showToast('Shop ID not found!', true);
+        return;
+      }
+      
+      if (!confirm('Are you sure you want to activate this shop?')) return;
+
+      try {
+        await apiReactivateShop(shopId, adminToken);
+        showToast('✅ Shop activated successfully!');
+        loadShops();
+      } catch (error) {
+        showToast('❌ ' + error.message, true);
+      }
+    }
+
+    // ─── LOGOUT ──────────────────────────────────────
+    function doLogout() {
+      sessionStorage.removeItem('bk_admin_token');
+      adminToken = null;
+      document.getElementById('loginSection').style.display = 'block';
+      document.getElementById('adminContent').style.display = 'none';
+      showToast('Logged out');
+    }
+
+    // ─── TOAST ────────────────────────────────────────
+    function showToast(msg, isError) {
+      isError = isError || false;
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      setTimeout(function() { t.classList.add('show'); }, 10);
+      setTimeout(function() { t.classList.remove('show'); }, 3500);
+    }
+
+    init();
+  </script>
+</body>
+</html>

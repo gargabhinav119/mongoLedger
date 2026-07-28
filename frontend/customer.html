@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>बही खाता - Customer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #1a1209;
+      --card: #2a1f0f;
+      --card2: #241a0c;
+      --border: #5a3e1b;
+      --gold: #c9923f;
+      --gold-light: #e8b96a;
+      --text: #f0dfc0;
+      --text-muted: #9a8060;
+      --red: #e05555;
+      --red-bg: #2d1010;
+      --green: #4caf7d;
+      --green-bg: #0d2518;
+      --input-bg: #1f1608;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      margin: 16px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 14px; }
+
+    .back-btn {
+      width: 38px; height: 38px;
+      background: var(--card2);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      transition: border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .back-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .back-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .header-name {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+    }
+
+    .header-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    .header-actions { display: flex; gap: 10px; }
+
+    .icon-btn {
+      width: 38px; height: 38px;
+      background: var(--card2);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--gold-light);
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { border-color: var(--gold); }
+    .icon-btn svg { width: 17px; height: 17px; fill: currentColor; }
+
+    /* BALANCE CARDS */
+    .balance-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 0 16px 16px;
+    }
+
+    .bal-card {
+      background: var(--card2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .bal-card.debit-card { border-color: rgba(224,85,85,0.4); background: rgba(45,16,16,0.6); }
+    .bal-card.credit-card { border-color: rgba(76,175,125,0.4); background: rgba(13,37,24,0.6); }
+
+    .bal-label {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .bal-label.net { color: var(--text-muted); }
+    .bal-label.debit { color: var(--red); }
+    .bal-label.credit { color: var(--green); }
+
+    .bal-amount {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .bal-amount.net { color: var(--text); }
+    .bal-amount.debit { color: var(--red); }
+    .bal-amount.credit { color: var(--green); }
+
+    .bal-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .status-settled { background: rgba(201,146,63,0.15); color: var(--gold); border: 1px solid var(--gold); }
+    .status-due { background: rgba(224,85,85,0.12); color: var(--red); border: 1px solid var(--red); }
+    .status-advance { background: rgba(76,175,125,0.12); color: var(--green); border: 1px solid var(--green); }
+
+    /* TRANSACTIONS */
+    .tx-section {
+      margin: 0 16px 24px;
+      background: var(--card2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .tx-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tx-title {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 1.1rem;
+      color: var(--gold-light);
+    }
+
+    .tx-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid;
+      display: flex; align-items: center; gap: 6px;
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+
+    .btn-gold { background: var(--gold); color: #1a1209; border-color: var(--gold); }
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+    .btn-outline { background: transparent; color: var(--text); border-color: var(--border); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* TABLE */
+    .tx-table { width: 100%; border-collapse: collapse; }
+
+    .tx-table th {
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.1);
+    }
+
+    .tx-table th.right { text-align: right; }
+    .tx-table th.debit-col { color: var(--red); }
+    .tx-table th.credit-col { color: var(--green); }
+
+    .tx-table td {
+      padding: 13px 16px;
+      font-size: 0.85rem;
+      color: var(--text);
+      border-bottom: 1px solid rgba(90,62,27,0.3);
+      vertical-align: middle;
+    }
+
+    .tx-table tr:last-child td { border-bottom: none; }
+    .tx-table tr:hover td { background: rgba(201,146,63,0.04); }
+
+    .tx-table td.right { text-align: right; }
+    .tx-table td.debit-amt { color: var(--red); font-weight: 600; text-align: right; }
+    .tx-table td.credit-amt { color: var(--green); font-weight: 600; text-align: right; }
+    .tx-table td.muted { color: var(--text-muted); font-size: 0.8rem; }
+
+    .mode-badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(201,146,63,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(201,146,63,0.3);
+    }
+
+    .action-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tbl-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; gap: 3px;
+      transition: all 0.15s;
+    }
+    .tbl-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .tbl-btn.del:hover { border-color: var(--red); color: var(--red); }
+    .tbl-btn svg { width: 11px; height: 11px; fill: currentColor; }
+
+    .empty-tx {
+      padding: 50px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .empty-tx p { font-size: 0.88rem; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      width: 100%; max-width: 750px;
+      margin: 20px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h3 {
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      margin-bottom: 22px;
+      font-family: 'Tiro Devanagari Hindi', serif;
+    }
+
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none;
+      color: var(--text-muted); font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .type-toggle {
+      display: flex; gap: 10px; margin-bottom: 22px;
+    }
+
+    .type-btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 9px;
+      border: 2px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      transition: all 0.2s;
+    }
+
+    .type-btn.debit-btn.active {
+      border-color: var(--red);
+      background: rgba(224,85,85,0.1);
+      color: var(--red);
+    }
+
+    .type-btn.credit-btn.active {
+      border-color: var(--green);
+      background: rgba(76,175,125,0.1);
+      color: var(--green);
+    }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 13px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+    .form-select option { background: var(--card); }
+
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    .modal-footer {
+      display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;
+    }
+
+    /* ITEMS TABLE */
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .items-table th {
+      padding: 6px 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+    }
+    .items-table td {
+      padding: 4px;
+      border-bottom: 1px solid rgba(90,62,27,0.2);
+      vertical-align: middle;
+    }
+    .items-table input {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 6px 8px;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .items-table input:focus { border-color: var(--gold); }
+    .items-table input.item-name { min-width: 100px; }
+    .items-table input.item-rate { 
+      text-align: center;
+      max-width: 90px;
+    }
+    .items-table input.item-qty {
+      text-align: center;
+      max-width: 120px;
+    }
+    .items-table .item-total {
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      font-size: 0.85rem;
+      min-width: 80px;
+    }
+    .items-table .add-row-btn {
+      width: 100%;
+      padding: 8px;
+      background: transparent;
+      border: 1.5px dashed var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+    .items-table .add-row-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .items-table .remove-item {
+      background: transparent;
+      border: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .items-table .remove-item:hover {
+      background: rgba(224,85,85,0.1);
+    }
+    .items-table .grand-total-row td {
+      padding: 10px 4px;
+      border-top: 2px solid var(--border);
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .items-table .grand-total-label {
+      text-align: right;
+      color: var(--text-muted);
+    }
+    .items-table .grand-total-value {
+      color: var(--gold);
+      text-align: center;
+    }
+
+    /* BILL MODAL - Simplified */
+    .bill-modal {
+      max-width: 480px;
+    }
+    .bill-modal .bill-summary {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .bill-modal .bill-summary .stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(90,62,27,0.2);
+    }
+    .bill-modal .bill-summary .stat:last-child {
+      border-bottom: none;
+    }
+    .bill-modal .bill-summary .label {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .bill-modal .bill-summary .value {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .bill-modal .bill-summary .value.dr { color: var(--red); }
+    .bill-modal .bill-summary .value.cr { color: var(--green); }
+    .bill-modal .bill-summary .value.net { color: var(--gold); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--card);
+      border: 1.5px solid var(--green);
+      border-radius: 10px;
+      padding: 12px 20px;
+      color: var(--green);
+      font-size: 0.88rem;
+      display: flex; align-items: center; gap: 8px;
+      z-index: 999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { border-color: var(--red); color: var(--red); }
+
+    /* CONFIRM */
+    .confirm-box {
+      max-width: 360px;
+    }
+    .confirm-box h3 { margin-bottom: 10px; }
+    .confirm-box p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 22px; }
+    .btn-danger { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn-danger:hover { opacity: 0.85; }
+
+    /* SCROLLBAR */
+    .modal::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-radius: 3px;
+    }
+    .modal::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    /* DISABLED SELECT */
+    .form-select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 700px) {
+      .balance-row { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .tx-table { font-size: 0.7rem; }
+      .tx-table th, .tx-table td { padding: 8px 6px; }
+      .modal { padding: 20px 16px; max-width: 98%; }
+      .items-table { font-size: 0.7rem; }
+      .items-table input { font-size: 0.7rem; padding: 4px; }
+      .items-table input.item-rate { max-width: 70px; }
+      .items-table input.item-qty { max-width: 90px; }
+      .tx-actions .btn { font-size: 0.7rem; padding: 6px 10px; }
+      .header { padding: 12px 16px; }
+      .header-name { font-size: 1.1rem; }
+      .type-toggle { flex-direction: column; }
+      .type-btn { padding: 8px; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <button class="back-btn" onclick="goBack()">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <div>
+        <div class="header-name" id="customerNameHeader">—</div>
+        <div class="header-sub">Customer Ledger Account</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" title="Print Ledger" onclick="openPrintPage()">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 9V2h12v7h2a2 2 0 012 2v6h-4v5H6v-5H2v-6a2 2 0 012-2h2zm2-5v5h8V4H8zm8 16v-5H8v5h8zm2-9a1 1 0 100 2 1 1 0 000-2z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" title="Download Backup" onclick="downloadBackup()">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      </button>
+      <button class="icon-btn" title="Share via WhatsApp" onclick="shareWhatsApp()">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- BALANCE CARDS -->
+  <div class="balance-row" id="balanceCards"></div>
+
+  <!-- TRANSACTIONS -->
+  <div class="tx-section">
+    <div class="tx-header">
+      <div class="tx-title">Transaction Entries</div>
+      <div class="tx-actions">
+        <button class="btn btn-gold" onclick="openAddEntry()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Add Entry
+        </button>
+      </div>
+    </div>
+    <div id="txTableWrap"></div>
+  </div>
+
+  <!-- ADD ENTRY MODAL -->
+  <div class="modal-overlay" id="entryModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeEntry()">✕</button>
+      <h3 id="entryModalTitle">Add New Transaction</h3>
+
+      <div class="type-toggle">
+        <button class="type-btn debit-btn active" id="debitBtn" onclick="setType('debit')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>
+          DEBIT (Goods Given / Udhaar)
+        </button>
+        <button class="type-btn credit-btn" id="creditBtn" onclick="setType('credit')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          CREDIT (Payment Received)
+        </button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input class="form-input" type="date" id="entryDate"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Mode</label>
+          <select class="form-select" id="entryMode">
+            <option>Cash</option>
+            <option>UPI</option>
+            <option>Bank Transfer</option>
+            <option>Cheque</option>
+            <option>Credit</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ITEMS TABLE -->
+      <div class="form-group">
+        <label class="form-label">Items (Add multiple items with rate & quantity)</label>
+        <div style="overflow-x:auto;">
+          <table class="items-table" id="itemsTable">
+            <thead>
+              <tr>
+                <th style="width:35px;">#</th>
+                <th style="min-width:120px;">Particular (Item)</th>
+                <th style="width:90px;">Rate (₹)</th>
+                <th style="min-width:100px;">Qty (e.g. 2 kg, 5 meter)</th>
+                <th style="width:100px;">Total (₹)</th>
+                <th style="width:35px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody">
+              <!-- Rows added by JS -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6" style="padding:8px 4px;">
+                  <button type="button" class="add-row-btn" onclick="addItemRow()">
+                    + Add Item
+                  </button>
+                </td>
+              </tr>
+              <tr class="grand-total-row">
+                <td colspan="4" class="grand-total-label">Grand Total</td>
+                <td class="grand-total-value" id="grandTotal">₹0.00</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Remarks (Optional)</label>
+        <textarea class="form-textarea" id="entryRemarks" placeholder="Any extra details..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeEntry()">Cancel</button>
+        <button class="btn btn-gold" onclick="saveEntry()">Save Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal confirm-box">
+      <h3>Entry Delete karein?</h3>
+      <p>Kya aap sure hain? Ye entry hamesha ke liye delete ho jayegi.</p>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeConfirm()">Cancel</button>
+        <button class="btn btn-danger btn" onclick="confirmDeleteEntry()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    if (sessionStorage.getItem('bk_auth') !== 'true') window.location.href = 'index.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get('id');
+    if (!customerId) window.location.href = 'dashboard.html';
+
+    let editEntryId = null;
+    let deleteEntryId = null;
+    let currentType = 'debit';
+    let itemCounter = 0;
+
+    // ── GLOBAL STATE ──────────────────────────────────
+    let appData = { customers: [] };
+    let customer = null;
+
+    // ── HELPERS ───────────────────────────────────────
+    function formatAmount(n) {
+      return '₹' + Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function formatDate(d) {
+      if (!d) return '—';
+      const dt = new Date(d);
+      return dt.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function todayISO() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function getBalance(cust) {
+      const entries = cust.entries || [];
+      const debit  = entries.filter(e => e.type === 'debit').reduce((s,e) => s + e.amount, 0);
+      const credit = entries.filter(e => e.type === 'credit').reduce((s,e) => s + e.amount, 0);
+      return { debit, credit, net: debit - credit };
+    }
+
+    // ── PARSE QUANTITY ──────────────────────────────
+    function parseQuantity(qtyStr) {
+      if (!qtyStr || typeof qtyStr !== 'string') {
+        return { number: 0, unit: '', fullText: '' };
+      }
+      
+      // Extract number from string (e.g., "2 kg" → 2, "1.5 meter" → 1.5)
+      const match = qtyStr.match(/^([\d.]+)\s*(.*)$/);
+      if (match) {
+        return {
+          number: parseFloat(match[1]) || 0,
+          unit: match[2]?.trim() || '',
+          fullText: qtyStr.trim()
+        };
+      }
+      
+      // If no match, try to extract any number
+      const numMatch = qtyStr.match(/[\d.]+/);
+      if (numMatch) {
+        return {
+          number: parseFloat(numMatch[0]) || 0,
+          unit: qtyStr.replace(numMatch[0], '').trim(),
+          fullText: qtyStr.trim()
+        };
+      }
+      
+      return { number: 0, unit: '', fullText: qtyStr.trim() };
+    }
+
+    function loadCustomer() {
+      customer = appData.customers.find(c => c.id === customerId);
+      if (!customer) {
+        window.location.href = "dashboard.html";
+        return false;
+      }
+      return true;
+    }
+
+    // ── ITEMS FUNCTIONS ──────────────────────────────
+    function addItemRow(name = '', rate = '', qty = '') {
+      itemCounter++;
+      const tbody = document.getElementById('itemsBody');
+      const tr = document.createElement('tr');
+      tr.id = 'itemRow_' + itemCounter;
+      tr.innerHTML = `
+        <td style="text-align:center;color:var(--text-muted);font-size:0.8rem;">${itemCounter}</td>
+        <td>
+          <input type="text" class="item-name" placeholder="e.g. Rice" value="${name}">
+        </td>
+        <td>
+          <input type="number" class="item-rate" placeholder="0" value="${rate}" min="0" step="0.50">
+        </td>
+        <td>
+          <input type="text" class="item-qty" placeholder="e.g. 2 kg, 5 meter" value="${qty}">
+        </td>
+        <td class="item-total">₹0.00</td>
+        <td style="text-align:center;">
+          <button type="button" class="remove-item" onclick="removeItemRow('${tr.id}')" title="Remove item">✕</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+
+      // Event listeners for auto-calculation
+      const rateInput = tr.querySelector('.item-rate');
+      const qtyInput = tr.querySelector('.item-qty');
+
+      [rateInput, qtyInput].forEach(input => {
+        input.addEventListener('input', () => calculateItemTotal(tr));
+        input.addEventListener('change', () => calculateItemTotal(tr));
+      });
+
+      // Focus on name field if empty
+      if (!name && !rate && !qty) {
+        setTimeout(() => tr.querySelector('.item-name').focus(), 100);
+      }
+
+      calculateItemTotal(tr);
+      updateGrandTotal();
+    }
+
+    function removeItemRow(rowId) {
+      const row = document.getElementById(rowId);
+      if (row) {
+        const remaining = document.querySelectorAll('#itemsBody tr').length;
+        if (remaining <= 1) {
+          showToast('At least one item required', true);
+          return;
+        }
+        row.remove();
+        renumberItems();
+        updateGrandTotal();
+      }
+    }
+
+    function calculateItemTotal(row) {
+      const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+      const qtyText = row.querySelector('.item-qty').value || '';
+      const parsed = parseQuantity(qtyText);
+      const qty = parsed.number;
+      const total = rate * qty;
+      const totalEl = row.querySelector('.item-total');
+      totalEl.textContent = `₹${total.toFixed(2)}`;
+      updateGrandTotal();
+      return total;
+    }
+
+    function updateGrandTotal() {
+      const rows = document.querySelectorAll('#itemsBody tr');
+      let grandTotal = 0;
+      rows.forEach(row => {
+        const totalText = row.querySelector('.item-total')?.textContent || '₹0.00';
+        const total = parseFloat(totalText.replace('₹', '')) || 0;
+        grandTotal += total;
+      });
+      document.getElementById('grandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
+      return grandTotal;
+    }
+
+    function renumberItems() {
+      const rows = document.querySelectorAll('#itemsBody tr');
+      rows.forEach((row, index) => {
+        const numCell = row.querySelector('td:first-child');
+        if (numCell) numCell.textContent = index + 1;
+      });
+      itemCounter = rows.length;
+    }
+
+    function getItemsData() {
+      const rows = document.querySelectorAll('#itemsBody tr');
+      const items = [];
+      let grandTotal = 0;
+      rows.forEach(row => {
+        const name = row.querySelector('.item-name')?.value?.trim() || '';
+        const rate = parseFloat(row.querySelector('.item-rate')?.value) || 0;
+        const qtyText = row.querySelector('.item-qty')?.value?.trim() || '';
+        const parsed = parseQuantity(qtyText);
+        const qty = parsed.number;
+        const total = rate * qty;
+        if (name && rate > 0 && qty > 0) {
+          items.push({
+            id: 'i_' + Date.now() + '_' + items.length,
+            name: name,
+            rate: rate,
+            qty: qty,
+            qtyDisplay: qtyText,  // Store full text with unit
+            unit: parsed.unit,
+            total: total
+          });
+          grandTotal += total;
+        }
+      });
+      return { items, grandTotal };
+    }
+
+    function clearItems() {
+      document.getElementById('itemsBody').innerHTML = '';
+      itemCounter = 0;
+    }
+
+    // ── RENDER ────────────────────────────────────────
+    function render() {
+      if (!loadCustomer()) return;
+      const c = customer;
+
+      document.title = `${c.name} - बही खाता`;
+      document.getElementById('customerNameHeader').textContent = c.name;
+
+      const bal = getBalance(c);
+
+      let statusBadge = '';
+      if (bal.net === 0) statusBadge = '<span class="status-badge status-settled">Settled</span>';
+      else if (bal.net > 0) statusBadge = '<span class="status-badge status-due">Due (Udhaar)</span>';
+      else statusBadge = '<span class="status-badge status-advance">Advance</span>';
+
+      document.getElementById('balanceCards').innerHTML = `
+        <div class="bal-card">
+          <div class="bal-label net">NET BALANCE</div>
+          <div class="bal-amount net">${formatAmount(bal.net)}</div>
+          ${statusBadge}
+        </div>
+        <div class="bal-card debit-card">
+          <div class="bal-label debit">TOTAL DEBIT (GIVEN)</div>
+          <div class="bal-amount debit">${formatAmount(bal.debit)}</div>
+          <div class="bal-sub">Goods/Services provided</div>
+        </div>
+        <div class="bal-card credit-card">
+          <div class="bal-label credit">TOTAL CREDIT (RECEIVED)</div>
+          <div class="bal-amount credit">${formatAmount(bal.credit)}</div>
+          <div class="bal-sub">Payments received</div>
+        </div>`;
+
+      // TABLE
+      const entries = (c.entries || []).slice().sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      if (!entries.length) {
+        document.getElementById('txTableWrap').innerHTML = `
+          <div class="empty-tx"><p>No entries found. Add your first transaction!</p></div>`;
+        return;
+      }
+
+      const rows = entries.map((e, i) => {
+        let itemDetails = '';
+        if (e.items && e.items.length > 0) {
+          itemDetails = e.items.map(item => {
+            const displayQty = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
+            return `${item.name} (${displayQty} @ ₹${item.rate})`;
+          }).join('<br>');
+        } else {
+          itemDetails = e.particular || '—';
+        }
+
+        return `
+          <tr>
+            <td class="muted">${i+1}</td>
+            <td>${formatDate(e.date)}</td>
+            <td style="font-size:0.78rem;">${itemDetails}</td>
+            <td class="muted">${e.remarks || '—'}</td>
+            <td class="debit-amt">${e.type === 'debit' ? formatAmount(e.amount) : '—'}</td>
+            <td class="credit-amt">${e.type === 'credit' ? formatAmount(e.amount) : '—'}</td>
+            <td><span class="mode-badge">${e.mode || 'Cash'}</span></td>
+            <td>
+              <div class="action-btns">
+                <button class="tbl-btn" onclick="openEditEntry('${e.id}')">
+                  <svg viewBox="0 0 24 24" width="11" height="11"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                  Edit
+                </button>
+                <button class="tbl-btn del" onclick="askDeleteEntry('${e.id}')">
+                  <svg viewBox="0 0 24 24" width="11" height="11"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+
+      document.getElementById('txTableWrap').innerHTML = `
+        <table class="tx-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Date</th>
+              <th>Particular</th>
+              <th>Remarks</th>
+              <th class="right debit-col">Debit (Dr)</th>
+              <th class="right credit-col">Credit (Cr)</th>
+              <th>Mode</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    // ── ADD / EDIT ENTRY ──────────────────────────────
+    function openAddEntry() {
+      editEntryId = null;
+      currentType = 'debit';
+      document.getElementById('entryModalTitle').textContent = 'Add New Transaction';
+      document.getElementById('entryDate').value = todayISO();
+      document.getElementById('entryRemarks').value = '';
+      
+      clearItems();
+      addItemRow();
+      
+      document.getElementById('grandTotal').textContent = '₹0.00';
+      setType('debit');
+      document.getElementById('entryModal').classList.add('open');
+    }
+
+    function openEditEntry(id) {
+      if (!loadCustomer()) return;
+      const c = customer;
+      const e = (c.entries || []).find(x => x.id === id);
+      if (!e) return;
+      
+      editEntryId = id;
+      document.getElementById('entryModalTitle').textContent = 'Edit Transaction';
+      document.getElementById('entryDate').value = e.date;
+      document.getElementById('entryRemarks').value = e.remarks || '';
+      document.getElementById('entryMode').value = e.mode || 'Cash';
+      setType(e.type);
+      
+      // Populate items
+      clearItems();
+      if (e.items && e.items.length > 0) {
+        e.items.forEach(item => {
+          const qtyDisplay = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
+          addItemRow(item.name, item.rate, qtyDisplay);
+        });
+      } else {
+        // Legacy support: create single item from amount
+        addItemRow(e.particular || 'Item', e.amount || 0, '1');
+      }
+      
+      updateGrandTotal();
+      document.getElementById('entryModal').classList.add('open');
+    }
+
+    function closeEntry() {
+      document.getElementById('entryModal').classList.remove('open');
+      editEntryId = null;
+    }
+
+    function setType(type) {
+      currentType = type;
+      document.getElementById('debitBtn').classList.toggle('active', type === 'debit');
+      document.getElementById('creditBtn').classList.toggle('active', type === 'credit');
+      
+      const modeSelect = document.getElementById('entryMode');
+      if (type === 'debit') {
+        modeSelect.value = 'Udhaar';
+        modeSelect.disabled = true;
+      } else {
+        modeSelect.disabled = false;
+        if (modeSelect.value === 'Udhaar') {
+          modeSelect.value = 'Cash';
+        }
+      }
+    }
+
+    async function saveEntry() {
+      const date = document.getElementById('entryDate').value;
+      const mode = document.getElementById('entryMode').value;
+      const remarks = document.getElementById('entryRemarks').value.trim();
+
+      if (!date) { showToast('Date select karein', true); return; }
+
+      // Get items data
+      const { items, grandTotal } = getItemsData();
+      if (items.length === 0) {
+        showToast('At least one item add karein', true);
+        return;
+      }
+      if (grandTotal <= 0) {
+        showToast('Valid amount darj karein', true);
+        return;
+      }
+
+      // Generate particular summary with full quantity display
+      const summary = items.map(item => {
+        const displayQty = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
+        return `${item.name} (${displayQty})`;
+      }).join(', ');
+
+      const data = JSON.parse(JSON.stringify(appData));
+      const idx = data.customers.findIndex(c => c.id === customerId);
+      if (idx === -1) { showToast('Customer not found', true); return; }
+
+      if (!data.customers[idx].entries) data.customers[idx].entries = [];
+
+      if (editEntryId) {
+        const ei = data.customers[idx].entries.findIndex(e => e.id === editEntryId);
+        if (ei !== -1) {
+          data.customers[idx].entries[ei] = {
+            ...data.customers[idx].entries[ei],
+            type: currentType,
+            date: date,
+            items: items,
+            amount: grandTotal,
+            particular: summary,
+            mode: mode,
+            remarks: remarks
+          };
+        } else {
+          showToast('Entry not found', true);
+          return;
+        }
+      } else {
+        data.customers[idx].entries.push({
+          id: 'e_' + Date.now(),
+          type: currentType,
+          date: date,
+          items: items,
+          amount: grandTotal,
+          particular: summary,
+          mode: mode,
+          remarks: remarks
+        });
+      }
+
+      try {
+        await apiSaveData(data);
+        appData = data;
+        loadCustomer();
+        closeEntry();
+        render();
+        showToast(editEntryId ? 'Entry update ho gayi!' : 'Entry add ho gayi!');
+      } catch (err) {
+        console.error(err);
+        showToast('Entry save nahi hui', true);
+      }
+    }
+
+    // ── DELETE ENTRY ──────────────────────────────────
+    function askDeleteEntry(id) {
+      deleteEntryId = id;
+      document.getElementById('confirmModal').classList.add('open');
+    }
+
+    function closeConfirm() {
+      document.getElementById('confirmModal').classList.remove('open');
+      deleteEntryId = null;
+    }
+
+    async function confirmDeleteEntry() {
+      if (!deleteEntryId) return;
+
+      const data = JSON.parse(JSON.stringify(appData));
+      const idx = data.customers.findIndex(c => c.id === customerId);
+      if (idx === -1) { showToast('Customer not found', true); return; }
+
+      data.customers[idx].entries = (data.customers[idx].entries || []).filter(e => e.id !== deleteEntryId);
+
+      try {
+        await apiSaveData(data);
+        appData = data;
+        loadCustomer();
+        closeConfirm();
+        render();
+        showToast('Entry delete ho gayi');
+      } catch (err) {
+        console.error(err);
+        showToast('Delete nahi hua', true);
+      }
+    }
+
+    // ── DOWNLOAD BACKUP ───────────────────────────────
+    async function downloadBackup() {
+      try {
+        const res = await apiBackup(appData);
+        if (res && res.filename) {
+          showToast(`Backup saved: downloads/${res.filename}`);
+        } else {
+          showToast('Backup response invalid', true);
+        }
+      } catch (e) {
+        console.error(e);
+        showToast('Backup save nahi hua', true);
+      }
+    }
+
+    // ── WHATSAPP SHARE ────────────────────────────────
+    function shareWhatsApp() {
+      if (!loadCustomer()) return;
+      const c = customer;
+      const bal = getBalance(c);
+      const entries = (c.entries || []).length;
+      const msg = `Namaskar ${c.name} ji,\n\nAapka बही खाता statement:\n📊 Total Entries: ${entries}\n💳 Udhaar (Dr): ₹${bal.debit.toFixed(2)}\n💰 Jama (Cr): ₹${bal.credit.toFixed(2)}\n📌 Net Balance: ${formatAmount(bal.net)} ${bal.net > 0 ? '(Due)' : bal.net < 0 ? '(Advance)' : '(Settled)'}\n\nKripya jald se jald baki chukta karein.\nDhanyawad 🙏`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // ── PRINT LEDGER ──────────────────────────────────
+    function openPrintPage() {
+      window.open(
+        `print.html?id=${customerId}`,
+        "_blank"
+      );
+    }
+
+    // ── BACK ──────────────────────────────────────────
+    function goBack() { window.location.href = 'dashboard.html'; }
+
+    // ── TOAST ─────────────────────────────────────────
+    function showToast(msg, isError = false) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      setTimeout(() => t.classList.add('show'), 10);
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── INIT ──────────────────────────────────────────
+    async function init() {
+      try {
+        appData = await apiGetData();
+        if (loadCustomer()) {
+          render();
+        }
+      } catch (e) {
+        console.error(e);
+        showToast('Server se connect nahi ho paya', true);
+      }
+    }
+
+    // Close on overlay click
+    ['entryModal','confirmModal'].forEach(id => {
+      document.getElementById(id).addEventListener('click', e => {
+        if (e.target === e.currentTarget) {
+          if (id === 'entryModal') closeEntry();
+          else if (id === 'confirmModal') closeConfirm();
+        }
+      });
+    });
+
+    init();
+  </script>
+</body>
+</html>

@@ -2263,6 +2263,35 @@
           "particular": "u.t (10), bhada (1)",
           "mode": "",
           "remarks": "14"
+        },
+        {
+          "id": "e_1785118567615",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785118567598_0",
+              "name": "u.t",
+              "rate": 350,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3500
+            },
+            {
+              "id": "i_1785118567598_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 3600,
+          "particular": "u.t (10), bhada (1)",
+          "mode": "",
+          "remarks": "20"
         }
       ]
     },
@@ -4411,10 +4440,10 @@
         {
           "id": "e_1782978207952",
           "type": "credit",
-          "date": "2026-07-27",
+          "date": "2026-06-27",
           "items": [
             {
-              "id": "i_1782978207948_0",
+              "id": "i_1785131007406_0",
               "name": "jama",
               "rate": 80000,
               "qty": 1,
@@ -4425,6 +4454,115 @@
           ],
           "amount": 80000,
           "particular": "jama (1)",
+          "mode": "Cash",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785131109708",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131109701_0",
+              "name": "20 mm",
+              "rate": 66,
+              "qty": 146.4,
+              "qtyDisplay": "146.4 kg",
+              "unit": "kg",
+              "total": 9662.4
+            }
+          ],
+          "amount": 9662.4,
+          "particular": "20 mm (146.4 kg)",
+          "mode": "",
+          "remarks": "12"
+        },
+        {
+          "id": "e_1785131181479",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131181472_0",
+              "name": "16 mm sariya",
+              "rate": 66,
+              "qty": 263.1,
+              "qtyDisplay": "263.1 kg",
+              "unit": "kg",
+              "total": 17364.600000000002
+            }
+          ],
+          "amount": 17364.600000000002,
+          "particular": "16 mm sariya (263.1 kg)",
+          "mode": "",
+          "remarks": "13"
+        },
+        {
+          "id": "e_1785131393515",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131393506_0",
+              "name": "chambal lal",
+              "rate": 1,
+              "qty": 200,
+              "qtyDisplay": "200",
+              "unit": "",
+              "total": 200
+            },
+            {
+              "id": "i_1785131393506_1",
+              "name": "tar",
+              "rate": 100,
+              "qty": 10,
+              "qtyDisplay": "10 kg",
+              "unit": "kg",
+              "total": 1000
+            }
+          ],
+          "amount": 1200,
+          "particular": "chambal lal (200), tar (10 kg)",
+          "mode": "",
+          "remarks": "14"
+        },
+        {
+          "id": "e_1785131569934",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131569926_0",
+              "name": "12 mm srbh",
+              "rate": 66,
+              "qty": 162,
+              "qtyDisplay": "162 kg",
+              "unit": "kg",
+              "total": 10692
+            }
+          ],
+          "amount": 10692,
+          "particular": "12 mm srbh (162 kg)",
+          "mode": "",
+          "remarks": "15"
+        },
+        {
+          "id": "e_1785131600935",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131600930_0",
+              "name": "bhada sabhi ka",
+              "rate": 1500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1500
+            }
+          ],
+          "amount": 1500,
+          "particular": "bhada sabhi ka (1)",
           "mode": "",
           "remarks": ""
         }
@@ -7961,6 +8099,44 @@
           "particular": "colom (133.8 kg), rodi (50 f), bhada (1)",
           "mode": "",
           "remarks": "22"
+        },
+        {
+          "id": "e_1785082671740",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785082671733_0",
+              "name": "u.t grade",
+              "rate": 375,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 750
+            },
+            {
+              "id": "i_1785082671734_1",
+              "name": "tata tar",
+              "rate": 80,
+              "qty": 0.9,
+              "qtyDisplay": ".900 gm",
+              "unit": "gm",
+              "total": 72
+            },
+            {
+              "id": "i_1785082671734_2",
+              "name": "shri grade",
+              "rate": 350,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 350
+            }
+          ],
+          "amount": 1172,
+          "particular": "u.t grade (2), tata tar (.900 gm), shri grade (1)",
+          "mode": "",
+          "remarks": "2"
         }
       ]
     },
@@ -8131,6 +8307,26 @@
           "particular": "reti (6 f), dust (6 f), bhada (1)",
           "mode": "",
           "remarks": "17"
+        },
+        {
+          "id": "e_1785082738793",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785082738784_0",
+              "name": "jama",
+              "rate": 7000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 7000
+            }
+          ],
+          "amount": 7000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -8987,6 +9183,35 @@
           "particular": "reti (100 f), dust (100 f), ut 43 grade (10), bhada (1)",
           "mode": "",
           "remarks": "7"
+        },
+        {
+          "id": "e_1785082785269",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785082785260_0",
+              "name": "u.t grade",
+              "rate": 380,
+              "qty": 15,
+              "qtyDisplay": "15",
+              "unit": "",
+              "total": 5700
+            },
+            {
+              "id": "i_1785082785260_1",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 5900,
+          "particular": "u.t grade (15), bhada (1)",
+          "mode": "",
+          "remarks": "25"
         }
       ]
     },
@@ -9190,6 +9415,26 @@
           "particular": "chambal dust (112.5 man), tulai (1), bhada (1)",
           "mode": "",
           "remarks": "19"
+        },
+        {
+          "id": "e_1785082829296",
+          "type": "credit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785082829290_0",
+              "name": "jama",
+              "rate": 8100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 8100
+            }
+          ],
+          "amount": 8100,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -10753,6 +10998,55 @@
           "particular": "ut ppc (50)",
           "mode": "",
           "remarks": "11"
+        },
+        {
+          "id": "e_1785083334716",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785083334710_0",
+              "name": "u.t ppc",
+              "rate": 345,
+              "qty": 15,
+              "qtyDisplay": "15 bag",
+              "unit": "bag",
+              "total": 5175
+            }
+          ],
+          "amount": 5175,
+          "particular": "u.t ppc (15 bag)",
+          "mode": "",
+          "remarks": "1"
+        },
+        {
+          "id": "e_1785083367437",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785083367416_0",
+              "name": "u.t",
+              "rate": 345,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3450
+            },
+            {
+              "id": "i_1785083367416_1",
+              "name": "magna",
+              "rate": 345,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 345
+            }
+          ],
+          "amount": 3795,
+          "particular": "u.t (10), magna (1)",
+          "mode": "",
+          "remarks": "3"
         }
       ]
     },
@@ -12662,6 +12956,167 @@
           "particular": "dust (100 f), j.k  43 grade (15), bhada (1)",
           "mode": "",
           "remarks": "8"
+        },
+        {
+          "id": "e_1785083453387",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785083453378_0",
+              "name": "dust",
+              "rate": 33,
+              "qty": 200,
+              "qtyDisplay": "200 f",
+              "unit": "f",
+              "total": 6600
+            },
+            {
+              "id": "i_1785083453378_1",
+              "name": "rodi",
+              "rate": 39,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 3900
+            },
+            {
+              "id": "i_1785083453378_2",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 20,
+              "qtyDisplay": "20 bag",
+              "unit": "bag",
+              "total": 7400
+            },
+            {
+              "id": "i_1785083453378_3",
+              "name": "bhada",
+              "rate": 900,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 900
+            }
+          ],
+          "amount": 18800,
+          "particular": "dust (200 f), rodi (100 f), j.k grade (20 bag), bhada (1)",
+          "mode": "",
+          "remarks": "10"
+        },
+        {
+          "id": "e_1785083507274",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785083507255_0",
+              "name": "dust",
+              "rate": 33,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 3300
+            },
+            {
+              "id": "i_1785083507255_1",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 20,
+              "qtyDisplay": "20",
+              "unit": "",
+              "total": 7400
+            },
+            {
+              "id": "i_1785083507255_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 11000,
+          "particular": "dust (100 f), j.k grade (20), bhada (1)",
+          "mode": "",
+          "remarks": "30"
+        },
+        {
+          "id": "e_1785083546214",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785083546206_0",
+              "name": "dust",
+              "rate": 33,
+              "qty": 100,
+              "qtyDisplay": "100",
+              "unit": "",
+              "total": 3300
+            },
+            {
+              "id": "i_1785083546206_1",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 20,
+              "qtyDisplay": "20",
+              "unit": "",
+              "total": 7400
+            },
+            {
+              "id": "i_1785083546206_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 11000,
+          "particular": "dust (100), j.k grade (20), bhada (1)",
+          "mode": "",
+          "remarks": "5"
+        },
+        {
+          "id": "e_1785083576598",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785083576589_0",
+              "name": "dust",
+              "rate": 33,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 3300
+            },
+            {
+              "id": "i_1785083576589_1",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 20,
+              "qtyDisplay": "20",
+              "unit": "",
+              "total": 7400
+            },
+            {
+              "id": "i_1785083576589_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 11000,
+          "particular": "dust (100 f), j.k grade (20), bhada (1)",
+          "mode": "",
+          "remarks": "8"
         }
       ]
     },
@@ -13018,6 +13473,26 @@
           "particular": "dust (50 f), u.t (5), bhada (1)",
           "mode": "",
           "remarks": "32"
+        },
+        {
+          "id": "e_1785083636191",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785083636182_0",
+              "name": "jama",
+              "rate": 4000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 4000
+            }
+          ],
+          "amount": 4000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -13583,6 +14058,89 @@
           "particular": "12 column  + 12 jali (1109 kg), dust (50 f), rodi aada inch (50 f), bhada (1)",
           "mode": "",
           "remarks": "14"
+        },
+        {
+          "id": "e_1785084544931",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785084544925_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2100
+            },
+            {
+              "id": "i_1785084544925_1",
+              "name": "rodi aada inch",
+              "rate": 40,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2000
+            },
+            {
+              "id": "i_1785084544925_2",
+              "name": "tata tar",
+              "rate": 100,
+              "qty": 5,
+              "qtyDisplay": "5 kg",
+              "unit": "kg",
+              "total": 500
+            },
+            {
+              "id": "i_1785084544925_3",
+              "name": "3 column + 3 jali",
+              "rate": 62,
+              "qty": 337.8,
+              "qtyDisplay": "337.80 kg",
+              "unit": "kg",
+              "total": 20943.600000000002
+            },
+            {
+              "id": "i_1785084544925_4",
+              "name": "12 mm srmb",
+              "rate": 57,
+              "qty": 214,
+              "qtyDisplay": "214 kg",
+              "unit": "kg",
+              "total": 12198
+            },
+            {
+              "id": "i_1785084544925_5",
+              "name": "ring",
+              "rate": 60,
+              "qty": 58.1,
+              "qtyDisplay": "58.10 kg",
+              "unit": "kg",
+              "total": 3486
+            },
+            {
+              "id": "i_1785084544925_6",
+              "name": "bhada",
+              "rate": 1200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1200
+            },
+            {
+              "id": "i_1785084544925_7",
+              "name": "levar",
+              "rate": 700,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 700
+            }
+          ],
+          "amount": 43127.600000000006,
+          "particular": "dust (50 f), rodi aada inch (50 f), tata tar (5 kg), 3 column + 3 jali (337.80 kg), 12 mm srmb (214 kg), ring (58.10 kg), bhada (1), levar (1)",
+          "mode": "",
+          "remarks": "17"
         }
       ]
     },
@@ -13721,6 +14279,44 @@
           "particular": "dust (100 f), u t (10), bhada (1)",
           "mode": "",
           "remarks": "17"
+        },
+        {
+          "id": "e_1785084068932",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785084068926_0",
+              "name": "dust",
+              "rate": 46,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4600
+            },
+            {
+              "id": "i_1785084068926_1",
+              "name": "u.t",
+              "rate": 360,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3600
+            },
+            {
+              "id": "i_1785084068926_2",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 8450,
+          "particular": "dust (100 f), u.t (10), bhada (1)",
+          "mode": "",
+          "remarks": "11"
         }
       ]
     },
@@ -14367,6 +14963,106 @@
           "particular": "dust (417 man)",
           "mode": "",
           "remarks": "18"
+        },
+        {
+          "id": "e_1785083749967",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785083749959_0",
+              "name": "gitti",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 300,
+          "particular": "gitti (1)",
+          "mode": "",
+          "remarks": "31"
+        },
+        {
+          "id": "e_1785083794060",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785083794054_0",
+              "name": "cover block",
+              "rate": 600,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 600
+            }
+          ],
+          "amount": 600,
+          "particular": "cover block (1)",
+          "mode": "",
+          "remarks": "16"
+        },
+        {
+          "id": "e_1785083942424",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785083942418_0",
+              "name": "dust no.1",
+              "rate": 52,
+              "qty": 606,
+              "qtyDisplay": "606 man",
+              "unit": "man",
+              "total": 31512
+            }
+          ],
+          "amount": 31512,
+          "particular": "dust no.1 (606 man)",
+          "mode": "",
+          "remarks": "2"
+        },
+        {
+          "id": "e_1785083964842",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785083964834_0",
+              "name": "dust",
+              "rate": 52,
+              "qty": 660,
+              "qtyDisplay": "660 man",
+              "unit": "man",
+              "total": 34320
+            }
+          ],
+          "amount": 34320,
+          "particular": "dust (660 man)",
+          "mode": "",
+          "remarks": "3"
+        },
+        {
+          "id": "e_1785083998661",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785083998654_0",
+              "name": "dust no.1",
+              "rate": 52,
+              "qty": 646.5,
+              "qtyDisplay": "646.5 man",
+              "unit": "man",
+              "total": 33618
+            }
+          ],
+          "amount": 33618,
+          "particular": "dust no.1 (646.5 man)",
+          "mode": "",
+          "remarks": "4"
         }
       ]
     },
@@ -14793,6 +15489,35 @@
           "particular": "u.t grade (14), bhada (1)",
           "mode": "",
           "remarks": "6"
+        },
+        {
+          "id": "e_1785084145921",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785084295188_0",
+              "name": "u.t grade",
+              "rate": 390,
+              "qty": 20,
+              "qtyDisplay": "20",
+              "unit": "",
+              "total": 7800
+            },
+            {
+              "id": "i_1785084295188_1",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 8000,
+          "particular": "u.t grade (20), bhada (1)",
+          "mode": "",
+          "remarks": "9"
         }
       ]
     },
@@ -17210,6 +17935,73 @@
           "particular": "reti (50 f), shri sada (10), bhada (1)",
           "mode": "",
           "remarks": "3"
+        },
+        {
+          "id": "e_1785118768003",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785118767995_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2100
+            },
+            {
+              "id": "i_1785118767995_1",
+              "name": "j.k super",
+              "rate": 325,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1625
+            },
+            {
+              "id": "i_1785118767995_2",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 3925,
+          "particular": "dust (50 f), j.k super (5), bhada (1)",
+          "mode": "",
+          "remarks": "10"
+        },
+        {
+          "id": "e_1785118821227",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785118821219_0",
+              "name": "jira rodi",
+              "rate": 34,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 1700
+            },
+            {
+              "id": "i_1785118821219_1",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 1900,
+          "particular": "jira rodi (50 f), bhada (1)",
+          "mode": "",
+          "remarks": "12"
         }
       ]
     },
@@ -17804,6 +18596,35 @@
           "particular": "dust (534 man)",
           "mode": "",
           "remarks": "9"
+        },
+        {
+          "id": "e_1785124111904",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785124111895_0",
+              "name": "chambal dust",
+              "rate": 73,
+              "qty": 543,
+              "qtyDisplay": "543 man",
+              "unit": "man",
+              "total": 39639
+            },
+            {
+              "id": "i_1785124111895_1",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 39939,
+          "particular": "chambal dust (543 man), bhada (1)",
+          "mode": "",
+          "remarks": "13"
         }
       ]
     },
@@ -18542,6 +19363,256 @@
           "particular": "12 mm rathi (757.7 kg), 10mm rathi (489.6 kg), 8mm rathi (51.60 kg), lever (1), bhada (1)",
           "mode": "",
           "remarks": "25"
+        },
+        {
+          "id": "e_1785124406624",
+          "type": "credit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785124406618_0",
+              "name": "jama",
+              "rate": 500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 500
+            }
+          ],
+          "amount": 500,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785124479533",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785124479527_0",
+              "name": "cover block",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 200,
+          "particular": "cover block (1)",
+          "mode": "",
+          "remarks": "1"
+        },
+        {
+          "id": "e_1785124583072",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785124583065_0",
+              "name": "bhada+levar",
+              "rate": 1390,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1390
+            }
+          ],
+          "amount": 1390,
+          "particular": "bhada+levar (1)",
+          "mode": "",
+          "remarks": "5"
+        },
+        {
+          "id": "e_1785124689822",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785124689816_0",
+              "name": "dust",
+              "rate": 52,
+              "qty": 121,
+              "qtyDisplay": "121 man",
+              "unit": "man",
+              "total": 6292
+            },
+            {
+              "id": "i_1785124689816_1",
+              "name": "rodi",
+              "rate": 46,
+              "qty": 116,
+              "qtyDisplay": "116 man",
+              "unit": "man",
+              "total": 5336
+            },
+            {
+              "id": "i_1785124689816_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 700
+            }
+          ],
+          "amount": 12328,
+          "particular": "dust (121 man), rodi (116 man), bhada (2)",
+          "mode": "",
+          "remarks": "7"
+        },
+        {
+          "id": "e_1785124836023",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785124836015_0",
+              "name": "dust",
+              "rate": 55,
+              "qty": 137,
+              "qtyDisplay": "137 man",
+              "unit": "man",
+              "total": 7535
+            },
+            {
+              "id": "i_1785124836015_1",
+              "name": "rodi",
+              "rate": 46,
+              "qty": 115,
+              "qtyDisplay": "115 man",
+              "unit": "man",
+              "total": 5290
+            },
+            {
+              "id": "i_1785124836015_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 700
+            }
+          ],
+          "amount": 13525,
+          "particular": "dust (137 man), rodi (115 man), bhada (2)",
+          "mode": "",
+          "remarks": "8"
+        },
+        {
+          "id": "e_1785126053325",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785126053319_0",
+              "name": "ut super",
+              "rate": 370,
+              "qty": 50,
+              "qtyDisplay": "50",
+              "unit": "",
+              "total": 18500
+            },
+            {
+              "id": "i_1785126053319_1",
+              "name": "20 ltr cot ut",
+              "rate": 2200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 2200
+            },
+            {
+              "id": "i_1785126053319_2",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 20900,
+          "particular": "ut super (50), 20 ltr cot ut (1), bhada (1)",
+          "mode": "",
+          "remarks": "13"
+        },
+        {
+          "id": "e_1785126133578",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785126133572_0",
+              "name": "dust",
+              "rate": 52,
+              "qty": 120,
+              "qtyDisplay": "120 man",
+              "unit": "man",
+              "total": 6240
+            },
+            {
+              "id": "i_1785126133572_1",
+              "name": "rodi",
+              "rate": 46,
+              "qty": 113,
+              "qtyDisplay": "113 man",
+              "unit": "man",
+              "total": 5198
+            },
+            {
+              "id": "i_1785126133572_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 700
+            }
+          ],
+          "amount": 12138,
+          "particular": "dust (120 man), rodi (113 man), bhada (2)",
+          "mode": "",
+          "remarks": "16"
+        },
+        {
+          "id": "e_1785126245696",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785126245690_0",
+              "name": "ut super",
+              "rate": 370,
+              "qty": 25,
+              "qtyDisplay": "25",
+              "unit": "",
+              "total": 9250
+            },
+            {
+              "id": "i_1785126245690_1",
+              "name": "rodi haf",
+              "rate": 46,
+              "qty": 61,
+              "qtyDisplay": "61 man",
+              "unit": "man",
+              "total": 2806
+            },
+            {
+              "id": "i_1785126245690_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 350
+            }
+          ],
+          "amount": 12406,
+          "particular": "ut super (25), rodi haf (61 man), bhada (1)",
+          "mode": "",
+          "remarks": "18"
         }
       ]
     },
@@ -19185,6 +20256,44 @@
           "particular": "jama (1)",
           "mode": "",
           "remarks": ""
+        },
+        {
+          "id": "e_1785128122696",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785128122686_0",
+              "name": "dust",
+              "rate": 50,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 5000
+            },
+            {
+              "id": "i_1785128122686_1",
+              "name": "ut ppc",
+              "rate": 350,
+              "qty": 50,
+              "qtyDisplay": "50",
+              "unit": "",
+              "total": 17500
+            },
+            {
+              "id": "i_1785128122686_2",
+              "name": "levar+bhada",
+              "rate": 650,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 650
+            }
+          ],
+          "amount": 23150,
+          "particular": "dust (100 f), ut ppc (50), levar+bhada (1)",
+          "mode": "",
+          "remarks": "14"
         }
       ]
     },
@@ -19696,6 +20805,64 @@
           "particular": "jama (1)",
           "mode": "",
           "remarks": ""
+        },
+        {
+          "id": "e_1785128325529",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785128325523_0",
+              "name": "1 murga jali",
+              "rate": 450,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 450
+            }
+          ],
+          "amount": 450,
+          "particular": "1 murga jali (1)",
+          "mode": "",
+          "remarks": "9"
+        },
+        {
+          "id": "e_1785128407734",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785128407728_0",
+              "name": "chambal dust",
+              "rate": 75,
+              "qty": 113,
+              "qtyDisplay": "113 man",
+              "unit": "man",
+              "total": 8475
+            },
+            {
+              "id": "i_1785128407728_1",
+              "name": "fiber",
+              "rate": 360,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3600
+            },
+            {
+              "id": "i_1785128407728_2",
+              "name": "bhada+tulai",
+              "rate": 350,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 350
+            }
+          ],
+          "amount": 12425,
+          "particular": "chambal dust (113 man), fiber (10), bhada+tulai (1)",
+          "mode": "",
+          "remarks": "14"
         }
       ]
     },
@@ -22598,6 +23765,26 @@
           "particular": "j.k super (10), bhada + p.... (2)",
           "mode": "",
           "remarks": "5"
+        },
+        {
+          "id": "e_1785130601948",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785130601939_0",
+              "name": "jk sada",
+              "rate": 340,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3400
+            }
+          ],
+          "amount": 3400,
+          "particular": "jk sada (10)",
+          "mode": "",
+          "remarks": "4"
         }
       ]
     },
@@ -23090,6 +24277,35 @@
           "particular": "dust (50 f), shri grade (5), bhada (1)",
           "mode": "",
           "remarks": "13"
+        },
+        {
+          "id": "e_1785130796204",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785130796195_0",
+              "name": "dust",
+              "rate": 50,
+              "qty": 122,
+              "qtyDisplay": "122 man",
+              "unit": "man",
+              "total": 6100
+            },
+            {
+              "id": "i_1785130796195_1",
+              "name": "tulai+bhada",
+              "rate": 400,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 400
+            }
+          ],
+          "amount": 6500,
+          "particular": "dust (122 man), tulai+bhada (1)",
+          "mode": "",
+          "remarks": "17"
         }
       ]
     },
@@ -23579,6 +24795,26 @@
           "particular": "dust (100 f)",
           "mode": "",
           "remarks": "14"
+        },
+        {
+          "id": "e_1785131852051",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785131852045_0",
+              "name": "shri grade",
+              "rate": 350,
+              "qty": 7,
+              "qtyDisplay": "7",
+              "unit": "",
+              "total": 2450
+            }
+          ],
+          "amount": 2450,
+          "particular": "shri grade (7)",
+          "mode": "",
+          "remarks": "7"
         }
       ]
     },
@@ -24152,6 +25388,64 @@
           "particular": "dust (75 f), jeera (25 f), ut (7), bhada (1)",
           "mode": "",
           "remarks": "16"
+        },
+        {
+          "id": "e_1785080724563",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785080724549_0",
+              "name": "dust",
+              "rate": 46,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2300
+            },
+            {
+              "id": "i_1785080724549_1",
+              "name": "ut",
+              "rate": 340,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1700
+            },
+            {
+              "id": "i_1785080724549_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 4300,
+          "particular": "dust (50 f), ut (5), bhada (1)",
+          "mode": "",
+          "remarks": "9"
+        },
+        {
+          "id": "e_1785080744559",
+          "type": "credit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785080744544_0",
+              "name": "jama",
+              "rate": 19000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 19000
+            }
+          ],
+          "amount": 19000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -26490,6 +27784,44 @@
           "particular": "12 mm srmb (84.50 kg), 16 mm srmb (94 kg), levar (1), bhada (1)",
           "mode": "",
           "remarks": "12"
+        },
+        {
+          "id": "e_1785118339583",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785118339569_0",
+              "name": "u.t",
+              "rate": 350,
+              "qty": 50,
+              "qtyDisplay": "50",
+              "unit": "",
+              "total": 17500
+            },
+            {
+              "id": "i_1785118339569_1",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            },
+            {
+              "id": "i_1785118339569_2",
+              "name": "levar",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 17900,
+          "particular": "u.t (50), bhada (1), levar (1)",
+          "mode": "",
+          "remarks": "13"
         }
       ]
     },
@@ -26836,6 +28168,35 @@
           "particular": "jama (1)",
           "mode": "",
           "remarks": ""
+        },
+        {
+          "id": "e_1785118624970",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785118624922_0",
+              "name": "u.t pila",
+              "rate": 350,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3500
+            },
+            {
+              "id": "i_1785118624922_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 3600,
+          "particular": "u.t pila (10), bhada (1)",
+          "mode": "",
+          "remarks": "22"
         }
       ]
     },
@@ -26921,6 +28282,26 @@
           "particular": "dust (50 f), bhada (1)",
           "mode": "",
           "remarks": "5"
+        },
+        {
+          "id": "e_1785118666315",
+          "type": "credit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785118666306_0",
+              "name": "jama",
+              "rate": 2300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 2300
+            }
+          ],
+          "amount": 2300,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -27701,6 +29082,46 @@
           "particular": "dust (138 man), tulai+bhada (1)",
           "mode": "",
           "remarks": "14"
+        },
+        {
+          "id": "e_1785080942098",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785080942085_0",
+              "name": "ut ppc",
+              "rate": 348,
+              "qty": 15,
+              "qtyDisplay": "15",
+              "unit": "",
+              "total": 5220
+            }
+          ],
+          "amount": 5220,
+          "particular": "ut ppc (15)",
+          "mode": "",
+          "remarks": "15"
+        },
+        {
+          "id": "e_1785080960333",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785080960324_0",
+              "name": "jama",
+              "rate": 11700,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 11700
+            }
+          ],
+          "amount": 11700,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -27833,6 +29254,167 @@
           "particular": "ut (5), bhada (1)",
           "mode": "",
           "remarks": "6"
+        },
+        {
+          "id": "e_1785082155519",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785082184015_0",
+              "name": "ut",
+              "rate": 350,
+              "qty": 3,
+              "qtyDisplay": "3",
+              "unit": "",
+              "total": 1050
+            },
+            {
+              "id": "i_1785082184015_1",
+              "name": "9 colum+ 9jalli",
+              "rate": 76,
+              "qty": 694,
+              "qtyDisplay": "694 kg",
+              "unit": "kg",
+              "total": 52744
+            },
+            {
+              "id": "i_1785082184015_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 54094,
+          "particular": "ut (3), 9 colum+ 9jalli (694 kg), bhada (1)",
+          "mode": "",
+          "remarks": "2"
+        },
+        {
+          "id": "e_1785082226353",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785082226345_0",
+              "name": "ut",
+              "rate": 350,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1750
+            },
+            {
+              "id": "i_1785082226345_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 1850,
+          "particular": "ut (5), bhada (1)",
+          "mode": "",
+          "remarks": "6"
+        },
+        {
+          "id": "e_1785082281570",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785082281563_0",
+              "name": "ut",
+              "rate": 350,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1750
+            },
+            {
+              "id": "i_1785082281563_1",
+              "name": "tata tar",
+              "rate": 80,
+              "qty": 0.5,
+              "qtyDisplay": ".500 gm",
+              "unit": "gm",
+              "total": 40
+            },
+            {
+              "id": "i_1785082281563_2",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 1890,
+          "particular": "ut (5), tata tar (.500 gm), bhada (1)",
+          "mode": "",
+          "remarks": "12"
+        },
+        {
+          "id": "e_1785082423375",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785082423368_0",
+              "name": "ut",
+              "rate": 350,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1750
+            },
+            {
+              "id": "i_1785082423368_1",
+              "name": "jalli",
+              "rate": 60,
+              "qty": 44.5,
+              "qtyDisplay": "44.50 kg",
+              "unit": "kg",
+              "total": 2670
+            },
+            {
+              "id": "i_1785082423368_2",
+              "name": "jalli",
+              "rate": 60,
+              "qty": 187,
+              "qtyDisplay": "187",
+              "unit": "",
+              "total": 11220
+            },
+            {
+              "id": "i_1785082423368_3",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            },
+            {
+              "id": "i_1785082423368_4",
+              "name": "lever",
+              "rate": 18,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 18
+            }
+          ],
+          "amount": 15958,
+          "particular": "ut (5), jalli (44.50 kg), jalli (187), bhada (1), lever (1)",
+          "mode": "",
+          "remarks": "9"
         }
       ]
     },
@@ -28009,6 +29591,26 @@
             }
           ],
           "amount": 1680,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785082970655",
+          "type": "credit",
+          "date": "2026-07-21",
+          "items": [
+            {
+              "id": "i_1785082970646_0",
+              "name": "jama",
+              "rate": 4000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 4000
+            }
+          ],
+          "amount": 4000,
           "particular": "jama (1)",
           "mode": "",
           "remarks": ""
@@ -29275,6 +30877,158 @@
           "particular": "dust 1 no (50 f), ut (5), bhada (1)",
           "mode": "",
           "remarks": "9"
+        },
+        {
+          "id": "e_1785129829448",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785129829442_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4200
+            },
+            {
+              "id": "i_1785129829442_1",
+              "name": "ut",
+              "rate": 360,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3600
+            },
+            {
+              "id": "i_1785129829442_2",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 8050,
+          "particular": "dust (100 f), ut (10), bhada (1)",
+          "mode": "",
+          "remarks": "3"
+        },
+        {
+          "id": "e_1785129898481",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785129898473_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4200
+            },
+            {
+              "id": "i_1785129898473_1",
+              "name": "ut",
+              "rate": 355,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3550
+            },
+            {
+              "id": "i_1785129898473_2",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 8000,
+          "particular": "dust (100 f), ut (10), bhada (1)",
+          "mode": "",
+          "remarks": "8"
+        },
+        {
+          "id": "e_1785130058918",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785130058911_0",
+              "name": "rodi haf",
+              "rate": 42,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2100
+            },
+            {
+              "id": "i_1785130058911_1",
+              "name": "ut peele",
+              "rate": 355,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3550
+            },
+            {
+              "id": "i_1785130058912_2",
+              "name": "bhada",
+              "rate": 200,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 200
+            }
+          ],
+          "amount": 5850,
+          "particular": "rodi haf (50 f), ut peele (10), bhada (1)",
+          "mode": "",
+          "remarks": "24"
+        },
+        {
+          "id": "e_1785130195507",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785130195501_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100",
+              "unit": "",
+              "total": 4200
+            },
+            {
+              "id": "i_1785130195501_1",
+              "name": "tar",
+              "rate": 100,
+              "qty": 2,
+              "qtyDisplay": "2 kg",
+              "unit": "kg",
+              "total": 200
+            },
+            {
+              "id": "i_1785130195501_2",
+              "name": "bhada",
+              "rate": 210,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 210
+            }
+          ],
+          "amount": 4610,
+          "particular": "dust (100), tar (2 kg), bhada (1)",
+          "mode": "",
+          "remarks": "47"
         }
       ]
     },
@@ -30268,6 +32022,73 @@
           "particular": "dust chambal (50 f), fiber (10), bhada (1)",
           "mode": "",
           "remarks": "20"
+        },
+        {
+          "id": "e_1785130923251",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785130923244_0",
+              "name": "chambal dust",
+              "rate": 75,
+              "qty": 12,
+              "qtyDisplay": "12 f",
+              "unit": "f",
+              "total": 900
+            },
+            {
+              "id": "i_1785130923244_1",
+              "name": "d g",
+              "rate": 340,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 680
+            },
+            {
+              "id": "i_1785130923245_2",
+              "name": "murga jaali",
+              "rate": 450,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 450
+            },
+            {
+              "id": "i_1785130923245_3",
+              "name": "bhada",
+              "rate": 150,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 150
+            }
+          ],
+          "amount": 2180,
+          "particular": "chambal dust (12 f), d g (2), murga jaali (1), bhada (1)",
+          "mode": "",
+          "remarks": "40"
+        },
+        {
+          "id": "e_1785130952218",
+          "type": "credit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785130952212_0",
+              "name": "jama",
+              "rate": 10000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 10000
+            }
+          ],
+          "amount": 10000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -31097,6 +32918,102 @@
           "particular": "rodi haf (110 man), ut grade (10), bhada+tulai (1)",
           "mode": "",
           "remarks": "17"
+        },
+        {
+          "id": "e_1785081455055",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785081455047_0",
+              "name": "dust",
+              "rate": 47,
+              "qty": 105,
+              "qtyDisplay": "105 man",
+              "unit": "man",
+              "total": 4935
+            },
+            {
+              "id": "i_1785081455047_1",
+              "name": "ut grade",
+              "rate": 375,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1875
+            },
+            {
+              "id": "i_1785081455047_2",
+              "name": "bhada+tulai",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 7110,
+          "particular": "dust (105 man), ut grade (5), bhada+tulai (1)",
+          "mode": "",
+          "remarks": "15"
+        },
+        {
+          "id": "e_1785081524449",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081524443_0",
+              "name": "dust",
+              "rate": 47,
+              "qty": 105,
+              "qtyDisplay": "105",
+              "unit": "",
+              "total": 4935
+            },
+            {
+              "id": "i_1785081524443_1",
+              "name": "ut grade",
+              "rate": 380,
+              "qty": 15,
+              "qtyDisplay": "15",
+              "unit": "",
+              "total": 5700
+            },
+            {
+              "id": "i_1785081524443_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 350
+            }
+          ],
+          "amount": 10985,
+          "particular": "dust (105), ut grade (15), bhada (1)",
+          "mode": "",
+          "remarks": "45"
+        },
+        {
+          "id": "e_1785081544777",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785081544766_0",
+              "name": "jama",
+              "rate": 25000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 25000
+            }
+          ],
+          "amount": 25000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -33025,6 +34942,35 @@
           "particular": "dust (100 f), u.t (10), bhada (1)",
           "mode": "",
           "remarks": "8"
+        },
+        {
+          "id": "e_1785083283786",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785083283779_0",
+              "name": "dust",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4200
+            },
+            {
+              "id": "i_1785083283779_1",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 4450,
+          "particular": "dust (100 f), bhada (1)",
+          "mode": "",
+          "remarks": "20"
         }
       ]
     },
@@ -33494,6 +35440,35 @@
           "particular": "rodi half inch (50 f), u.t (25)",
           "mode": "",
           "remarks": "8"
+        },
+        {
+          "id": "e_1785083703275",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785083703269_0",
+              "name": "beem",
+              "rate": 54,
+              "qty": 7.6,
+              "qtyDisplay": "7.6 kg",
+              "unit": "kg",
+              "total": 410.4
+            },
+            {
+              "id": "i_1785083703269_1",
+              "name": "levar",
+              "rate": 15,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 15
+            }
+          ],
+          "amount": 425.4,
+          "particular": "beem (7.6 kg), levar (1)",
+          "mode": "",
+          "remarks": "18"
         }
       ]
     },
@@ -34334,6 +36309,82 @@
           "particular": "rodi aada inch (49 f), tata tar (2.2 kg), j.k grade (20), bhada (1)",
           "mode": "",
           "remarks": "5"
+        },
+        {
+          "id": "e_1785117703667",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785117703647_0",
+              "name": "dust",
+              "rate": 47,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4700
+            },
+            {
+              "id": "i_1785117703647_1",
+              "name": "rodi",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4200
+            },
+            {
+              "id": "i_1785117703647_2",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3700
+            },
+            {
+              "id": "i_1785117703647_3",
+              "name": "bhada",
+              "rate": 700,
+              "qty": 2,
+              "qtyDisplay": "2",
+              "unit": "",
+              "total": 1400
+            }
+          ],
+          "amount": 14000,
+          "particular": "dust (100 f), rodi (100 f), j.k grade (10), bhada (2)",
+          "mode": "",
+          "remarks": "6"
+        },
+        {
+          "id": "e_1785117747582",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785117747576_0",
+              "name": "j.k grade",
+              "rate": 370,
+              "qty": 7,
+              "qtyDisplay": "7",
+              "unit": "",
+              "total": 2590
+            },
+            {
+              "id": "i_1785117747576_1",
+              "name": "bhada",
+              "rate": 800,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 800
+            }
+          ],
+          "amount": 3390,
+          "particular": "j.k grade (7), bhada (1)",
+          "mode": "",
+          "remarks": "6"
         }
       ]
     },
@@ -35344,6 +37395,35 @@
           "particular": "ut grade (10), ut grade (10), bhada (1)",
           "mode": "",
           "remarks": "2"
+        },
+        {
+          "id": "e_1785128527678",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785128527669_0",
+              "name": "ut wl",
+              "rate": 350,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3500
+            },
+            {
+              "id": "i_1785128527669_1",
+              "name": "bhada",
+              "rate": 150,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 150
+            }
+          ],
+          "amount": 3650,
+          "particular": "ut wl (10), bhada (1)",
+          "mode": "",
+          "remarks": "11"
         }
       ]
     },
@@ -35351,7 +37431,48 @@
       "id": "16fea50e-9239-4b1c-bade-278c8bbe0256",
       "name": "raj silani ji",
       "createdAt": "2026-07-01T16:33:38.754Z",
-      "entries": []
+      "entries": [
+        {
+          "id": "e_1785128646997",
+          "type": "debit",
+          "date": "2026-06-29",
+          "items": [
+            {
+              "id": "i_1785128646991_0",
+              "name": "balance",
+              "rate": 10000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 10000
+            }
+          ],
+          "amount": 10000,
+          "particular": "balance (1)",
+          "mode": "",
+          "remarks": "38"
+        },
+        {
+          "id": "e_1785128701884",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785128701878_0",
+              "name": "beg bhada",
+              "rate": 25,
+              "qty": 260,
+              "qtyDisplay": "260 beg",
+              "unit": "beg",
+              "total": 6500
+            }
+          ],
+          "amount": 6500,
+          "particular": "beg bhada (260 beg)",
+          "mode": "",
+          "remarks": "1"
+        }
+      ]
     },
     {
       "id": "8d585b4b-0f9b-401d-bedb-3063e211a989",
@@ -37146,6 +39267,55 @@
           "particular": "u.t (10), u.t super (10), bhada (1)",
           "mode": "",
           "remarks": "15"
+        },
+        {
+          "id": "e_1785131712532",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785131712525_0",
+              "name": "dust",
+              "rate": 20,
+              "qty": 360,
+              "qtyDisplay": "360 f",
+              "unit": "f",
+              "total": 7200
+            }
+          ],
+          "amount": 7200,
+          "particular": "dust (360 f)",
+          "mode": "",
+          "remarks": "32"
+        },
+        {
+          "id": "e_1785131757750",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785131757743_0",
+              "name": "ut ppc",
+              "rate": 360,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3600
+            },
+            {
+              "id": "i_1785131757743_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 3700,
+          "particular": "ut ppc (10), bhada (1)",
+          "mode": "",
+          "remarks": "11"
         }
       ]
     },
@@ -37410,6 +39580,35 @@
           "particular": "megna (7)",
           "mode": "",
           "remarks": "11"
+        },
+        {
+          "id": "e_1785129723885",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785129723876_0",
+              "name": "reti",
+              "rate": 20,
+              "qty": 6,
+              "qtyDisplay": "6 f",
+              "unit": "f",
+              "total": 120
+            },
+            {
+              "id": "i_1785129723876_1",
+              "name": "ut",
+              "rate": 360,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 360
+            }
+          ],
+          "amount": 480,
+          "particular": "reti (6 f), ut (1)",
+          "mode": "",
+          "remarks": "5"
         }
       ]
     },
@@ -38206,6 +40405,55 @@
           "particular": "magna bangur (50)",
           "mode": "",
           "remarks": "9"
+        },
+        {
+          "id": "e_1785081819861",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785081819852_0",
+              "name": "dg",
+              "rate": 330,
+              "qty": 25,
+              "qtyDisplay": "25",
+              "unit": "",
+              "total": 8250
+            },
+            {
+              "id": "i_1785081819852_1",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 8500,
+          "particular": "dg (25), bhada (1)",
+          "mode": "",
+          "remarks": "18"
+        },
+        {
+          "id": "e_1785081844232",
+          "type": "credit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081844224_0",
+              "name": "jama",
+              "rate": 4000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 4000
+            }
+          ],
+          "amount": 4000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -38637,6 +40885,55 @@
           "particular": "dust (50 f), fiber (10)",
           "mode": "",
           "remarks": "31"
+        },
+        {
+          "id": "e_1785083010951",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785083010940_0",
+              "name": "jama",
+              "rate": 51500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 51500
+            }
+          ],
+          "amount": 51500,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785083058959",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785083058948_0",
+              "name": "dust",
+              "rate": 45,
+              "qty": 50,
+              "qtyDisplay": "50 f",
+              "unit": "f",
+              "total": 2250
+            },
+            {
+              "id": "i_1785083058948_1",
+              "name": "fiber",
+              "rate": 350,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3500
+            }
+          ],
+          "amount": 5750,
+          "particular": "dust (50 f), fiber (10)",
+          "mode": "",
+          "remarks": "16"
         }
       ]
     },
@@ -39690,6 +41987,35 @@
           "particular": "dust (100 f), bhada (1)",
           "mode": "",
           "remarks": "1"
+        },
+        {
+          "id": "e_1785083151066",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785083151059_0",
+              "name": "ring",
+              "rate": 60,
+              "qty": 13,
+              "qtyDisplay": "13 kg",
+              "unit": "kg",
+              "total": 780
+            },
+            {
+              "id": "i_1785083151059_1",
+              "name": "ring",
+              "rate": 3,
+              "qty": 50,
+              "qtyDisplay": "50 pees",
+              "unit": "pees",
+              "total": 150
+            }
+          ],
+          "amount": 930,
+          "particular": "ring (13 kg), ring (50 pees)",
+          "mode": "",
+          "remarks": "46"
         }
       ]
     },
@@ -39774,6 +42100,73 @@
           "items": [
             {
               "id": "i_1784701450226_0",
+              "name": "ut grade",
+              "rate": 380,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3800
+            }
+          ],
+          "amount": 3800,
+          "particular": "ut grade (10)",
+          "mode": "",
+          "remarks": "10"
+        },
+        {
+          "id": "e_1785080838088",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785080838075_0",
+              "name": "dust",
+              "rate": 48,
+              "qty": 55,
+              "qtyDisplay": "55 f",
+              "unit": "f",
+              "total": 2640
+            },
+            {
+              "id": "i_1785080838075_1",
+              "name": "jeera rodi`",
+              "rate": 36,
+              "qty": 55,
+              "qtyDisplay": "55 f",
+              "unit": "f",
+              "total": 1980
+            },
+            {
+              "id": "i_1785080838075_2",
+              "name": "shri grade",
+              "rate": 360,
+              "qty": 7,
+              "qtyDisplay": "7",
+              "unit": "",
+              "total": 2520
+            },
+            {
+              "id": "i_1785080838075_3",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 7440,
+          "particular": "dust (55 f), jeera rodi` (55 f), shri grade (7), bhada (1)",
+          "mode": "",
+          "remarks": "17"
+        },
+        {
+          "id": "e_1785080892157",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785080892143_0",
               "name": "ut grade",
               "rate": 380,
               "qty": 10,
@@ -40041,6 +42434,35 @@
           "particular": "jama (1)",
           "mode": "",
           "remarks": ""
+        },
+        {
+          "id": "e_1785118416342",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785118416331_0",
+              "name": "j.k super grade",
+              "rate": 360,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1800
+            },
+            {
+              "id": "i_1785118416331_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 1900,
+          "particular": "j.k super grade (5), bhada (1)",
+          "mode": "",
+          "remarks": "37"
         }
       ]
     },
@@ -40256,6 +42678,55 @@
           "particular": "ut grade (50), bhada (1)",
           "mode": "",
           "remarks": "12"
+        },
+        {
+          "id": "e_1785128841452",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785128841446_0",
+              "name": "ut grade",
+              "rate": 375,
+              "qty": 50,
+              "qtyDisplay": "50",
+              "unit": "",
+              "total": 18750
+            },
+            {
+              "id": "i_1785128841446_1",
+              "name": "bhada",
+              "rate": 700,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 700
+            }
+          ],
+          "amount": 19450,
+          "particular": "ut grade (50), bhada (1)",
+          "mode": "",
+          "remarks": "19"
+        },
+        {
+          "id": "e_1785128878650",
+          "type": "credit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785128878644_0",
+              "name": "jama",
+              "rate": 141500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 141500
+            }
+          ],
+          "amount": 141500,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -40820,6 +43291,26 @@
           "particular": "u.t ppc (10)",
           "mode": "",
           "remarks": "16"
+        },
+        {
+          "id": "e_1785084378672",
+          "type": "debit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785084378663_0",
+              "name": "u.t",
+              "rate": 340,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3400
+            }
+          ],
+          "amount": 3400,
+          "particular": "u.t (10)",
+          "mode": "",
+          "remarks": "29"
         }
       ]
     },
@@ -41494,6 +43985,35 @@
           "particular": "jama (1), jama (1)",
           "mode": "",
           "remarks": ""
+        },
+        {
+          "id": "e_1785123983913",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785123983900_0",
+              "name": "megna",
+              "rate": 345,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3450
+            },
+            {
+              "id": "i_1785123983900_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 3550,
+          "particular": "megna (10), bhada (1)",
+          "mode": "",
+          "remarks": "8"
         }
       ]
     },
@@ -41816,6 +44336,35 @@
           "particular": "dust (12 f), ut (2), bhada (1)",
           "mode": "",
           "remarks": "15"
+        },
+        {
+          "id": "e_1785081001041",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785081001031_0",
+              "name": "dust",
+              "rate": 46,
+              "qty": 12,
+              "qtyDisplay": "12 f",
+              "unit": "f",
+              "total": 552
+            },
+            {
+              "id": "i_1785081001031_1",
+              "name": "bhada",
+              "rate": 150,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 150
+            }
+          ],
+          "amount": 702,
+          "particular": "dust (12 f), bhada (1)",
+          "mode": "",
+          "remarks": "4"
         }
       ]
     },
@@ -41843,6 +44392,86 @@
           "particular": "dust (630 man)",
           "mode": "",
           "remarks": "6"
+        },
+        {
+          "id": "e_1785081107811",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081107801_0",
+              "name": "16 mm  rati",
+              "rate": 56.2,
+              "qty": 570.4,
+              "qtyDisplay": "570.4 kg",
+              "unit": "kg",
+              "total": 32056.48
+            }
+          ],
+          "amount": 32056.48,
+          "particular": "16 mm  rati (570.4 kg)",
+          "mode": "",
+          "remarks": "17"
+        },
+        {
+          "id": "e_1785081199323",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081199314_0",
+              "name": "12mm rathi",
+              "rate": 55,
+              "qty": 480.4,
+              "qtyDisplay": "480.4 kg",
+              "unit": "kg",
+              "total": 26422
+            }
+          ],
+          "amount": 26422,
+          "particular": "12mm rathi (480.4 kg)",
+          "mode": "",
+          "remarks": "18"
+        },
+        {
+          "id": "e_1785081248281",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081248274_0",
+              "name": "8mm rathi",
+              "rate": 58.5,
+              "qty": 278.3,
+              "qtyDisplay": "278.3 kg",
+              "unit": "kg",
+              "total": 16280.550000000001
+            }
+          ],
+          "amount": 16280.550000000001,
+          "particular": "8mm rathi (278.3 kg)",
+          "mode": "",
+          "remarks": "19"
+        },
+        {
+          "id": "e_1785081270443",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081270435_0",
+              "name": "bhada",
+              "rate": 800,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 800
+            }
+          ],
+          "amount": 800,
+          "particular": "bhada (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -41955,6 +44584,55 @@
           "particular": "8mm srmb (163 kg), levar (1)",
           "mode": "",
           "remarks": "16"
+        },
+        {
+          "id": "e_1785081969283",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785081969275_0",
+              "name": "jama",
+              "rate": 12000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 12000
+            }
+          ],
+          "amount": 12000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785081995042",
+          "type": "credit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785081995035_0",
+              "name": "jame",
+              "rate": 5000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 5000
+            },
+            {
+              "id": "i_1785081995035_1",
+              "name": "jama",
+              "rate": 20000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 20000
+            }
+          ],
+          "amount": 25000,
+          "particular": "jame (1), jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -42009,6 +44687,35 @@
           "particular": "dust (57 f), ut grade (5), srb (2 ltr), bhada+tulai (1)",
           "mode": "",
           "remarks": "7"
+        },
+        {
+          "id": "e_1785082528706",
+          "type": "credit",
+          "date": "2026-07-23",
+          "items": [
+            {
+              "id": "i_1785082528699_0",
+              "name": "jama",
+              "rate": 4300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 4300
+            },
+            {
+              "id": "i_1785082528699_1",
+              "name": "jama maal",
+              "rate": 1092,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1092
+            }
+          ],
+          "amount": 5392,
+          "particular": "jama (1), jama maal (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -42063,6 +44770,160 @@
           "particular": "dust no.1 (100 f)",
           "mode": "",
           "remarks": "23"
+        },
+        {
+          "id": "e_1785117831270",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785117831260_0",
+              "name": "jama",
+              "rate": 1904,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1904
+            }
+          ],
+          "amount": 1904,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785117908663",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785117908648_0",
+              "name": "rodi",
+              "rate": 46,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4600
+            },
+            {
+              "id": "i_1785117908648_1",
+              "name": "u.t grade",
+              "rate": 375,
+              "qty": 25,
+              "qtyDisplay": "25",
+              "unit": "",
+              "total": 9375
+            }
+          ],
+          "amount": 13975,
+          "particular": "rodi (100 f), u.t grade (25)",
+          "mode": "",
+          "remarks": "5"
+        },
+        {
+          "id": "e_1785117932768",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785117932762_0",
+              "name": "5 ltr w.p",
+              "rate": 650,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 650
+            }
+          ],
+          "amount": 650,
+          "particular": "5 ltr w.p (1)",
+          "mode": "",
+          "remarks": "14"
+        },
+        {
+          "id": "e_1785118070341",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785118070333_0",
+              "name": "dust",
+              "rate": 46,
+              "qty": 50,
+              "qtyDisplay": "50 man",
+              "unit": "man",
+              "total": 2300
+            },
+            {
+              "id": "i_1785118070334_1",
+              "name": "aada inch rodi",
+              "rate": 32,
+              "qty": 10,
+              "qtyDisplay": "10 f",
+              "unit": "f",
+              "total": 320
+            },
+            {
+              "id": "i_1785118070334_2",
+              "name": "u.t grade",
+              "rate": 370,
+              "qty": 4,
+              "qtyDisplay": "4",
+              "unit": "",
+              "total": 1480
+            },
+            {
+              "id": "i_1785118070334_3",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 4350,
+          "particular": "dust (50 man), aada inch rodi (10 f), u.t grade (4), bhada (1)",
+          "mode": "",
+          "remarks": "40"
+        },
+        {
+          "id": "e_1785118168540",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785118168532_0",
+              "name": "dust",
+              "rate": 62,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 6200
+            },
+            {
+              "id": "i_1785118168532_1",
+              "name": "u.t grade",
+              "rate": 380,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1900
+            },
+            {
+              "id": "i_1785118168532_2",
+              "name": "u.t pila",
+              "rate": 360,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1800
+            }
+          ],
+          "amount": 9900,
+          "particular": "dust (100 f), u.t grade (5), u.t pila (5)",
+          "mode": "",
+          "remarks": "23"
         }
       ]
     },
@@ -42099,6 +44960,46 @@
           "particular": "dust no.1 (110 man), u.t (5)",
           "mode": "",
           "remarks": "35"
+        },
+        {
+          "id": "e_1785118491496",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785118491482_0",
+              "name": "16 column",
+              "rate": 60,
+              "qty": 140.9,
+              "qtyDisplay": "140.9 kg",
+              "unit": "kg",
+              "total": 8454
+            }
+          ],
+          "amount": 8454,
+          "particular": "16 column (140.9 kg)",
+          "mode": "",
+          "remarks": "37"
+        },
+        {
+          "id": "e_1785118523696",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785118523688_0",
+              "name": "u.t ppc",
+              "rate": 350,
+              "qty": 15,
+              "qtyDisplay": "15",
+              "unit": "",
+              "total": 5250
+            }
+          ],
+          "amount": 5250,
+          "particular": "u.t ppc (15)",
+          "mode": "",
+          "remarks": "21"
         }
       ]
     },
@@ -42227,6 +45128,35 @@
           "particular": "reti (230 f)",
           "mode": "",
           "remarks": "24"
+        },
+        {
+          "id": "e_1785124340643",
+          "type": "credit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785124340637_0",
+              "name": "jama",
+              "rate": 4500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 4500
+            },
+            {
+              "id": "i_1785124340637_1",
+              "name": "jama maal",
+              "rate": 500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 500
+            }
+          ],
+          "amount": 5000,
+          "particular": "jama (1), jama maal (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -42263,6 +45193,64 @@
           "particular": "u.t grade (10), bhada (1)",
           "mode": "",
           "remarks": "13"
+        },
+        {
+          "id": "e_1785129043341",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785129043334_0",
+              "name": "dust",
+              "rate": 46,
+              "qty": 116,
+              "qtyDisplay": "116  f",
+              "unit": "f",
+              "total": 5336
+            },
+            {
+              "id": "i_1785129043334_1",
+              "name": "ut",
+              "rate": 350,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1750
+            },
+            {
+              "id": "i_1785129043334_2",
+              "name": "bhada",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 7386,
+          "particular": "dust (116  f), ut (5), bhada (1)",
+          "mode": "",
+          "remarks": "10"
+        },
+        {
+          "id": "e_1785129067753",
+          "type": "credit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785129067747_0",
+              "name": "jama",
+              "rate": 5000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 5000
+            }
+          ],
+          "amount": 5000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
         }
       ]
     },
@@ -42352,6 +45340,334 @@
       "name": "deshraj ji bms sondhad",
       "createdAt": "2026-07-23T05:10:48.690Z",
       "entries": []
+    },
+    {
+      "id": "afc8ae4b-bc01-4dc3-b5f5-560cb8e304fb",
+      "name": "bharat lal plumber",
+      "createdAt": "2026-07-26T15:59:39.349Z",
+      "entries": [
+        {
+          "id": "e_1785081707330",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081707324_0",
+              "name": "rodi",
+              "rate": 40,
+              "qty": 40,
+              "qtyDisplay": "40 f",
+              "unit": "f",
+              "total": 1600
+            },
+            {
+              "id": "i_1785081707324_1",
+              "name": "jk grade",
+              "rate": 370,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3700
+            },
+            {
+              "id": "i_1785081707324_2",
+              "name": "dust",
+              "rate": 46,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4600
+            },
+            {
+              "id": "i_1785081707324_3",
+              "name": "jk super",
+              "rate": 340,
+              "qty": 20,
+              "qtyDisplay": "20",
+              "unit": "",
+              "total": 6800
+            },
+            {
+              "id": "i_1785081707324_4",
+              "name": "bhada",
+              "rate": 1500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 1500
+            }
+          ],
+          "amount": 18200,
+          "particular": "rodi (40 f), jk grade (10), dust (100 f), jk super (20), bhada (1)",
+          "mode": "",
+          "remarks": "42,43"
+        },
+        {
+          "id": "e_1785081723993",
+          "type": "credit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785081723987_0",
+              "name": "jama",
+              "rate": 23500,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 23500
+            }
+          ],
+          "amount": 23500,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        }
+      ]
+    },
+    {
+      "id": "8c47c2e1-581a-4ab9-9fa3-1a0c9963c991",
+      "name": "bheem ji sondh wale",
+      "createdAt": "2026-07-26T16:04:27.325Z",
+      "entries": [
+        {
+          "id": "e_1785081937299",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785081937292_0",
+              "name": "rodi halk",
+              "rate": 40,
+              "qty": 90,
+              "qtyDisplay": "90 f",
+              "unit": "f",
+              "total": 3600
+            },
+            {
+              "id": "i_1785081937292_1",
+              "name": "jeera rodi",
+              "rate": 35,
+              "qty": 38,
+              "qtyDisplay": "38 f",
+              "unit": "f",
+              "total": 1330
+            },
+            {
+              "id": "i_1785081937292_2",
+              "name": "bhada",
+              "rate": 350,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 350
+            }
+          ],
+          "amount": 5280,
+          "particular": "rodi halk (90 f), jeera rodi (38 f), bhada (1)",
+          "mode": "",
+          "remarks": "7"
+        }
+      ]
+    },
+    {
+      "id": "1a1beb52-14d7-4150-9159-5c5a833693cd",
+      "name": "goldi mendiratta ji",
+      "createdAt": "2026-07-26T16:20:54.833Z",
+      "entries": [
+        {
+          "id": "e_1785082909983",
+          "type": "debit",
+          "date": "2026-07-25",
+          "items": [
+            {
+              "id": "i_1785082909977_0",
+              "name": "dust",
+              "rate": 45,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4500
+            },
+            {
+              "id": "i_1785082909977_1",
+              "name": "bhada",
+              "rate": 250,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 250
+            }
+          ],
+          "amount": 4750,
+          "particular": "dust (100 f), bhada (1)",
+          "mode": "",
+          "remarks": "26"
+        }
+      ]
+    },
+    {
+      "id": "8608f8dc-821b-45b2-93b9-3d55a1b13997",
+      "name": "mohit muneen c/o satpal gupta",
+      "createdAt": "2026-07-27T02:10:32.238Z",
+      "entries": [
+        {
+          "id": "e_1785118290655",
+          "type": "debit",
+          "date": "2026-07-22",
+          "items": [
+            {
+              "id": "i_1785118290649_0",
+              "name": "dust",
+              "rate": 44,
+              "qty": 59,
+              "qtyDisplay": "59 man",
+              "unit": "man",
+              "total": 2596
+            },
+            {
+              "id": "i_1785118290649_1",
+              "name": "u.t",
+              "rate": 360,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1800
+            },
+            {
+              "id": "i_1785118290649_2",
+              "name": "bhada+ tulai",
+              "rate": 300,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 300
+            }
+          ],
+          "amount": 4696,
+          "particular": "dust (59 man), u.t (5), bhada+ tulai (1)",
+          "mode": "",
+          "remarks": "11"
+        }
+      ]
+    },
+    {
+      "id": "521d3665-8385-43eb-9624-23f70185bbda",
+      "name": "prem shergariya ji",
+      "createdAt": "2026-07-27T04:56:23.653Z",
+      "entries": [
+        {
+          "id": "e_1785128248129",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785128248123_0",
+              "name": "jk grade",
+              "rate": 370,
+              "qty": 5,
+              "qtyDisplay": "5",
+              "unit": "",
+              "total": 1850
+            },
+            {
+              "id": "i_1785128248123_1",
+              "name": "bhada",
+              "rate": 100,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 100
+            }
+          ],
+          "amount": 1950,
+          "particular": "jk grade (5), bhada (1)",
+          "mode": "",
+          "remarks": "15"
+        }
+      ]
+    },
+    {
+      "id": "c682e0f5-3048-4957-acc5-238ee07b9de9",
+      "name": "shyam pti ji",
+      "createdAt": "2026-07-27T05:31:05.145Z",
+      "entries": [
+        {
+          "id": "e_1785130298230",
+          "type": "credit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785130298222_0",
+              "name": "jama",
+              "rate": 10000,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 10000
+            }
+          ],
+          "amount": 10000,
+          "particular": "jama (1)",
+          "mode": "",
+          "remarks": ""
+        },
+        {
+          "id": "e_1785130454569",
+          "type": "debit",
+          "date": "2026-07-24",
+          "items": [
+            {
+              "id": "i_1785130454563_0",
+              "name": "jk grade",
+              "rate": 370,
+              "qty": 15,
+              "qtyDisplay": "15",
+              "unit": "",
+              "total": 5550
+            },
+            {
+              "id": "i_1785130454563_1",
+              "name": "ut super",
+              "rate": 360,
+              "qty": 10,
+              "qtyDisplay": "10",
+              "unit": "",
+              "total": 3600
+            },
+            {
+              "id": "i_1785130454563_2",
+              "name": "rodi",
+              "rate": 42,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 4200
+            },
+            {
+              "id": "i_1785130454563_3",
+              "name": "dust",
+              "rate": 62,
+              "qty": 100,
+              "qtyDisplay": "100 f",
+              "unit": "f",
+              "total": 6200
+            },
+            {
+              "id": "i_1785130454563_4",
+              "name": "5 ltr srb",
+              "rate": 650,
+              "qty": 1,
+              "qtyDisplay": "1",
+              "unit": "",
+              "total": 650
+            }
+          ],
+          "amount": 20200,
+          "particular": "jk grade (15), ut super (10), rodi (100 f), dust (100 f), 5 ltr srb (1)",
+          "mode": "",
+          "remarks": "36"
+        }
+      ]
     }
   ]
 }

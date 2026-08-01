@@ -27,31 +27,56 @@ router.get('/', verifyShop, async (req, res) => {
 });
 
 // POST data for logged-in shop
+// Incremental upsert: sirf changed/new customers write hote hain,
+// aur sirf woh customers delete hote hain jo incoming payload me nahi hain.
+// Poore collection ka delete+reinsert nahi hota (pehle yahi slow tha).
 router.post('/', verifyShop, async (req, res) => {
   try {
     const incomingData = req.body;
-    
+
     if (!incomingData.customers || !Array.isArray(incomingData.customers)) {
       return res.status(400).json({ error: 'Invalid data format' });
     }
 
-    // Delete all existing customers for this shop
-    await Customer.deleteMany({ shopId: req.shopId });
+    const incomingIds = incomingData.customers.map(c => c.id);
 
-    // Insert new customers
-    const customersToInsert = incomingData.customers.map(c => ({
+    // Sirf un customers ko delete karo jo ab incoming list me nahi hain
+    // (user ne delete kiya ho frontend se)
+    const deleteOp = Customer.deleteMany({
       shopId: req.shopId,
-      id: c.id,
-      name: c.name,
-      createdAt: c.createdAt || new Date().toISOString(),
-      entries: c.entries || []
+      id: { $nin: incomingIds }
+    });
+
+    // Baaki sab customers upsert (update if exists, insert if new)
+    const bulkOps = incomingData.customers.map(c => ({
+      updateOne: {
+        filter: { shopId: req.shopId, id: c.id },
+        update: {
+          $set: {
+            shopId: req.shopId,
+            id: c.id,
+            name: c.name,
+            createdAt: c.createdAt || new Date().toISOString(),
+            entries: c.entries || []
+          }
+        },
+        upsert: true
+      }
     }));
 
-    if (customersToInsert.length > 0) {
-      await Customer.insertMany(customersToInsert);
-    }
+    const [deleteResult, bulkResult] = await Promise.all([
+      deleteOp,
+      bulkOps.length > 0
+        ? Customer.bulkWrite(bulkOps, { ordered: false })
+        : Promise.resolve(null)
+    ]);
 
-    res.json({ success: true, count: customersToInsert.length });
+    res.json({
+      success: true,
+      count: incomingData.customers.length,
+      deleted: deleteResult.deletedCount,
+      upserted: bulkResult ? (bulkResult.upsertedCount + bulkResult.modifiedCount) : 0
+    });
   } catch (error) {
     console.error('POST data error:', error);
     res.status(500).json({ error: 'Server error' });

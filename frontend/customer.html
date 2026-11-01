@@ -198,10 +198,12 @@
       text-align: left;
       border-bottom: 1px solid var(--border);
       background: rgba(0,0,0,0.1);
+      white-space: nowrap;
     }
     .tx-table th.right { text-align: right; }
     .tx-table th.debit-col { color: var(--red); }
     .tx-table th.credit-col { color: var(--green); }
+    .tx-table th.balance-col { color: var(--gold-light); }
 
     .tx-table td {
       padding: 8px 6px;
@@ -214,9 +216,20 @@
     .tx-table tr:hover td { background: rgba(201,146,63,0.04); }
 
     .tx-table td.right { text-align: right; }
-    .tx-table td.debit-amt { color: var(--red); font-weight: 600; text-align: right; }
-    .tx-table td.credit-amt { color: var(--green); font-weight: 600; text-align: right; }
+    .tx-table td.debit-amt { color: var(--red); font-weight: 600; text-align: right; white-space: nowrap; }
+    .tx-table td.credit-amt { color: var(--green); font-weight: 600; text-align: right; white-space: nowrap; }
     .tx-table td.muted { color: var(--text-muted); font-size: 0.65rem; }
+
+    /* RUNNING BALANCE */
+    .tx-table td.balance-amt {
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+    .tx-table td.balance-amt.due     { color: var(--red); }
+    .tx-table td.balance-amt.advance { color: var(--green); }
+    .tx-table td.balance-amt.settled { color: var(--text-muted); }
 
     .mode-badge {
       display: inline-block;
@@ -227,6 +240,7 @@
       background: rgba(201,146,63,0.12);
       color: var(--gold);
       border: 1px solid rgba(201,146,63,0.3);
+      white-space: nowrap;
     }
 
     .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
@@ -242,6 +256,7 @@
       font-family: 'Inter', sans-serif;
       display: inline-flex; align-items: center; gap: 2px;
       transition: all 0.15s;
+      white-space: nowrap;
     }
     .tbl-btn:hover { border-color: var(--gold); color: var(--gold); }
     .tbl-btn.del:hover { border-color: var(--red); color: var(--red); }
@@ -487,6 +502,7 @@
       .tx-table { font-size: 0.6rem; }
       .tx-table th, .tx-table td { padding: 5px 4px; }
       .tx-table td { font-size: 0.6rem; }
+      .tx-table td.balance-amt { font-size: 0.6rem; }
       .mode-badge { font-size: 0.5rem; padding: 1px 5px; }
       .tbl-btn { font-size: 0.55rem; padding: 1px 4px; }
       .modal { padding: 14px 10px; max-width: 100%; margin: 6px; }
@@ -508,6 +524,7 @@
       .header-name { font-size: 0.95rem; }
       .tx-table th, .tx-table td { padding: 3px 2px; }
       .tx-table td { font-size: 0.55rem; }
+      .tx-table td.balance-amt { font-size: 0.55rem; }
       .bal-amount { font-size: 1rem; }
       .bal-card { padding: 8px 10px; }
       .items-table input.item-rate { max-width: 45px; }
@@ -713,6 +730,7 @@
     function formatDate(d) {
       if (!d) return '—';
       const dt = new Date(d);
+      if (isNaN(dt.getTime())) return '—';
       return dt.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     }
 
@@ -722,11 +740,12 @@
 
     function getBalance(cust) {
       const entries = cust.entries || [];
+      const opening = Number(cust.openingBalance || 0); // + = due, - = advance
       const debit  = entries.filter(e => e.type === 'debit')
                             .reduce((s, e) => s + Number(e.amount || 0), 0);
       const credit = entries.filter(e => e.type === 'credit')
                             .reduce((s, e) => s + Number(e.amount || 0), 0);
-      return { debit, credit, net: debit - credit };
+      return { debit, credit, net: opening + debit - credit, opening };
     }
 
     // ---------- LOAD ----------
@@ -774,10 +793,23 @@
       `;
     }
 
-    // ---------- TRANSACTIONS RENDER ----------
+    // ---------- TRANSACTIONS RENDER (with running balance) ----------
     function renderTransactions() {
-      const entries = (customer.entries || []).slice()
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
+      // chronological order (purana pehle) — running balance ke liye
+      const entriesChrono = (customer.entries || []).slice()
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      // running balance calculate (opening balance se start)
+      let running = Number(customer.openingBalance || 0);
+      const withBalance = entriesChrono.map(e => {
+        const amt = Number(e.amount || 0);
+        if (e.type === 'debit') running += amt;
+        else running -= amt;
+        return { ...e, runningBalance: running };
+      });
+
+      // display ke liye latest first
+      const entries = withBalance.slice().reverse();
 
       const wrap = document.getElementById('txTableWrap');
 
@@ -792,12 +824,20 @@
         if (e.items && e.items.length) {
           particular = e.items.map(it => {
             const qty = it.qtyDisplay || `${it.qty}${it.unit || ''}`;
-            return `<div>${it.name} (${qty} × ₹${Number(it.rate).toFixed(2)})</div>`;
+            return `<div>${it.name} (${qty} × ₹${Number(it.rate || 0).toFixed(2)})</div>`;
           }).join('');
         } else {
           particular = e.particular || '—';
         }
         const remarks = e.remarks || e.note || e.comment || '';
+
+        // running balance ka color + text
+        const rbClass = e.runningBalance > 0 ? 'due'
+                      : e.runningBalance < 0 ? 'advance' : 'settled';
+        const rbText = Math.abs(e.runningBalance) === 0
+                      ? '₹0.00'
+                      : formatAmount(e.runningBalance) +
+                        (e.runningBalance > 0 ? ' Due' : ' Adv');
 
         rows += `
           <tr>
@@ -806,6 +846,7 @@
             <td><span class="mode-badge">${e.mode || '—'}</span></td>
             <td class="debit-amt">${e.type === 'debit' ? formatAmount(e.amount) : '—'}</td>
             <td class="credit-amt">${e.type === 'credit' ? formatAmount(e.amount) : '—'}</td>
+            <td class="balance-amt ${rbClass}">${rbText}</td>
             <td>
               <div class="action-btns">
                 <button class="tbl-btn" onclick="editEntry('${e.id}')">
@@ -832,6 +873,7 @@
                 <th style="min-width:70px;">Mode</th>
                 <th class="right debit-col" style="min-width:80px;">Debit</th>
                 <th class="right credit-col" style="min-width:80px;">Credit</th>
+                <th class="right balance-col" style="min-width:90px;">Balance</th>
                 <th style="min-width:90px;">Action</th>
               </tr>
             </thead>

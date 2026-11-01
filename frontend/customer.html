@@ -463,6 +463,16 @@
 
     .form-select:disabled { opacity: 0.6; cursor: not-allowed; }
 
+    /* PRINT MODAL HELPERS */
+    .print-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: -6px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    #printRangeFields { display: none; }
+
     /* RESPONSIVE FINE-TUNE */
     @media (max-width: 600px) {
       .header { padding: 10px 12px; margin: 6px 8px 10px; }
@@ -574,6 +584,7 @@
         <div class="form-group">
           <label class="form-label">Payment Mode</label>
           <select class="form-select" id="entryMode">
+            <option>Udhaar</option>
             <option>Cash</option>
             <option>UPI</option>
             <option>Bank Transfer</option>
@@ -636,6 +647,42 @@
     </div>
   </div>
 
+  <!-- PRINT OPTIONS MODAL -->
+  <div class="modal-overlay" id="printModal">
+    <div class="modal confirm-box" style="max-width:440px;">
+      <button class="modal-close" onclick="closePrintModal()">✕</button>
+      <h3>Print Options</h3>
+      <p class="print-hint">Choose what to include in the printed statement.</p>
+
+      <div class="type-toggle">
+        <button class="type-btn debit-btn active" id="printFullBtn" onclick="setPrintMode('full')">
+          📄 Full Ledger
+        </button>
+        <button class="type-btn credit-btn" id="printRangeBtn" onclick="setPrintMode('range')">
+          📅 Date Range
+        </button>
+      </div>
+
+      <div id="printRangeFields">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">From Date</label>
+            <input class="form-input" type="date" id="printFromDate"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">To Date</label>
+            <input class="form-input" type="date" id="printToDate"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closePrintModal()">Cancel</button>
+        <button class="btn btn-gold" onclick="confirmPrint()">🖨 Print</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div class="toast" id="toast">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
@@ -654,6 +701,7 @@
     let deleteEntryId = null;
     let currentType = 'debit';
     let itemCounter = 0;
+    let printMode = 'full';
 
     let appData = { customers: [] };
     let customer = null;
@@ -674,367 +722,317 @@
 
     function getBalance(cust) {
       const entries = cust.entries || [];
-      const debit  = entries.filter(e => e.type === 'debit').reduce((s,e) => s + e.amount, 0);
-      const credit = entries.filter(e => e.type === 'credit').reduce((s,e) => s + e.amount, 0);
+      const debit  = entries.filter(e => e.type === 'debit')
+                            .reduce((s, e) => s + Number(e.amount || 0), 0);
+      const credit = entries.filter(e => e.type === 'credit')
+                            .reduce((s, e) => s + Number(e.amount || 0), 0);
       return { debit, credit, net: debit - credit };
     }
 
-    function parseQuantity(qtyStr) {
-      if (!qtyStr || typeof qtyStr !== 'string') {
-        return { number: 0, unit: '', fullText: '' };
-      }
-      const match = qtyStr.match(/^([\d.]+)\s*(.*)$/);
-      if (match) {
-        return {
-          number: parseFloat(match[1]) || 0,
-          unit: match[2]?.trim() || '',
-          fullText: qtyStr.trim()
-        };
-      }
-      const numMatch = qtyStr.match(/[\d.]+/);
-      if (numMatch) {
-        return {
-          number: parseFloat(numMatch[0]) || 0,
-          unit: qtyStr.replace(numMatch[0], '').trim(),
-          fullText: qtyStr.trim()
-        };
-      }
-      return { number: 0, unit: '', fullText: qtyStr.trim() };
-    }
-
-    function loadCustomer() {
-      customer = appData.customers.find(c => c.id === customerId);
-      if (!customer) {
-        window.location.href = "dashboard.html";
-        return false;
-      }
-      return true;
-    }
-
-    // ── ITEMS ──
-    function addItemRow(name = '', rate = '', qty = '') {
-      itemCounter++;
-      const tbody = document.getElementById('itemsBody');
-      const tr = document.createElement('tr');
-      tr.id = 'itemRow_' + itemCounter;
-      tr.innerHTML = `
-        <td style="text-align:center;color:var(--text-muted);font-size:0.7rem;">${itemCounter}</td>
-        <td><input type="text" class="item-name" placeholder="Item" value="${name}"></td>
-        <td><input type="number" class="item-rate" placeholder="0" value="${rate}" min="0" step="0.50"></td>
-        <td><input type="text" class="item-qty" placeholder="2 kg" value="${qty}"></td>
-        <td class="item-total">₹0.00</td>
-        <td style="text-align:center;"><button type="button" class="remove-item" onclick="removeItemRow('${tr.id}')">✕</button></td>
-      `;
-      tbody.appendChild(tr);
-
-      const rateInput = tr.querySelector('.item-rate');
-      const qtyInput = tr.querySelector('.item-qty');
-      [rateInput, qtyInput].forEach(input => {
-        input.addEventListener('input', () => calculateItemTotal(tr));
-        input.addEventListener('change', () => calculateItemTotal(tr));
-      });
-
-      if (!name && !rate && !qty) {
-        setTimeout(() => tr.querySelector('.item-name').focus(), 100);
-      }
-      calculateItemTotal(tr);
-      updateGrandTotal();
-    }
-
-    function removeItemRow(rowId) {
-      const row = document.getElementById(rowId);
-      if (row) {
-        const remaining = document.querySelectorAll('#itemsBody tr').length;
-        if (remaining <= 1) {
-          showToast('At least one item required', true);
+    // ---------- LOAD ----------
+    async function loadData() {
+      try {
+        appData = await apiGetData();
+        customer = (appData.customers || []).find(c => c.id === customerId);
+        if (!customer) {
+          document.getElementById('customerNameHeader').textContent = 'Not found';
           return;
         }
-        row.remove();
-        renumberItems();
-        updateGrandTotal();
+        document.getElementById('customerNameHeader').textContent = customer.name || 'Customer';
+        renderBalance();
+        renderTransactions();
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to load data', true);
       }
     }
 
-    function calculateItemTotal(row) {
-      const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
-      const qtyText = row.querySelector('.item-qty').value || '';
-      const parsed = parseQuantity(qtyText);
-      const qty = parsed.number;
-      const total = rate * qty;
-      row.querySelector('.item-total').textContent = `₹${total.toFixed(2)}`;
-      updateGrandTotal();
-      return total;
-    }
-
-    function updateGrandTotal() {
-      const rows = document.querySelectorAll('#itemsBody tr');
-      let grandTotal = 0;
-      rows.forEach(row => {
-        const totalText = row.querySelector('.item-total')?.textContent || '₹0.00';
-        const total = parseFloat(totalText.replace('₹', '')) || 0;
-        grandTotal += total;
-      });
-      document.getElementById('grandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
-      return grandTotal;
-    }
-
-    function renumberItems() {
-      const rows = document.querySelectorAll('#itemsBody tr');
-      rows.forEach((row, index) => {
-        const numCell = row.querySelector('td:first-child');
-        if (numCell) numCell.textContent = index + 1;
-      });
-      itemCounter = rows.length;
-    }
-
-    function getItemsData() {
-      const rows = document.querySelectorAll('#itemsBody tr');
-      const items = [];
-      let grandTotal = 0;
-      rows.forEach(row => {
-        const name = row.querySelector('.item-name')?.value?.trim() || '';
-        const rate = parseFloat(row.querySelector('.item-rate')?.value) || 0;
-        const qtyText = row.querySelector('.item-qty')?.value?.trim() || '';
-        const parsed = parseQuantity(qtyText);
-        const qty = parsed.number;
-        const total = rate * qty;
-        if (name && rate > 0 && qty > 0) {
-          items.push({
-            id: 'i_' + Date.now() + '_' + items.length,
-            name, rate, qty,
-            qtyDisplay: qtyText,
-            unit: parsed.unit,
-            total
-          });
-          grandTotal += total;
-        }
-      });
-      return { items, grandTotal };
-    }
-
-    function clearItems() {
-      document.getElementById('itemsBody').innerHTML = '';
-      itemCounter = 0;
-    }
-
-    // ── RENDER ──
-    function render() {
-      if (!loadCustomer()) return;
-      const c = customer;
-      document.title = `${c.name} - बही खाता`;
-      document.getElementById('customerNameHeader').textContent = c.name;
-
-      const bal = getBalance(c);
-      let statusBadge = '';
-      if (bal.net === 0) statusBadge = '<span class="status-badge status-settled">Settled</span>';
-      else if (bal.net > 0) statusBadge = '<span class="status-badge status-due">Due (Udhaar)</span>';
-      else statusBadge = '<span class="status-badge status-advance">Advance</span>';
+    // ---------- BALANCE RENDER ----------
+    function renderBalance() {
+      const bal = getBalance(customer);
+      let statusClass = 'status-settled';
+      let statusText = 'Settled';
+      if (bal.net > 0) { statusClass = 'status-due'; statusText = 'Due'; }
+      else if (bal.net < 0) { statusClass = 'status-advance'; statusText = 'Advance'; }
 
       document.getElementById('balanceCards').innerHTML = `
         <div class="bal-card">
-          <div class="bal-label net">NET BALANCE</div>
+          <div class="bal-label net">Net Balance</div>
           <div class="bal-amount net">${formatAmount(bal.net)}</div>
-          ${statusBadge}
+          <span class="status-badge ${statusClass}">${statusText}</span>
         </div>
         <div class="bal-card debit-card">
-          <div class="bal-label debit">DEBIT (Given)</div>
+          <div class="bal-label debit">Total Debit (Udhaar)</div>
           <div class="bal-amount debit">${formatAmount(bal.debit)}</div>
-          <div class="bal-sub">Goods/Services</div>
+          <div class="bal-sub">${(customer.entries || []).filter(e => e.type === 'debit').length} entries</div>
         </div>
         <div class="bal-card credit-card">
-          <div class="bal-label credit">CREDIT (Received)</div>
+          <div class="bal-label credit">Total Credit (Payment)</div>
           <div class="bal-amount credit">${formatAmount(bal.credit)}</div>
-          <div class="bal-sub">Payments</div>
-        </div>`;
+          <div class="bal-sub">${(customer.entries || []).filter(e => e.type === 'credit').length} entries</div>
+        </div>
+      `;
+    }
 
-      const entries = (c.entries || []).slice().sort((a,b) => new Date(a.date) - new Date(b.date));
+    // ---------- TRANSACTIONS RENDER ----------
+    function renderTransactions() {
+      const entries = (customer.entries || []).slice()
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const wrap = document.getElementById('txTableWrap');
 
       if (!entries.length) {
-        document.getElementById('txTableWrap').innerHTML = `
-          <div class="empty-tx"><p>No entries yet. Add your first transaction!</p></div>`;
+        wrap.innerHTML = `<div class="empty-tx"><p>No transactions yet.</p></div>`;
         return;
       }
 
-      const rows = entries.map((e, i) => {
-        let itemDetails = '';
-        if (e.items && e.items.length > 0) {
-          itemDetails = e.items.map(item => {
-            const displayQty = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
-            return `${item.name} (${displayQty} @ ₹${item.rate})`;
-          }).join('<br>');
+      let rows = '';
+      entries.forEach(e => {
+        let particular = '';
+        if (e.items && e.items.length) {
+          particular = e.items.map(it => {
+            const qty = it.qtyDisplay || `${it.qty}${it.unit || ''}`;
+            return `<div>${it.name} (${qty} × ₹${Number(it.rate).toFixed(2)})</div>`;
+          }).join('');
         } else {
-          itemDetails = e.particular || '—';
+          particular = e.particular || '—';
         }
+        const remarks = e.remarks || e.note || e.comment || '';
 
-        return `
+        rows += `
           <tr>
-            <td class="muted">${i+1}</td>
             <td>${formatDate(e.date)}</td>
-            <td style="font-size:0.65rem;">${itemDetails}</td>
-            <td class="muted">${e.remarks || '—'}</td>
+            <td>${particular}${remarks ? `<div class="muted">${remarks}</div>` : ''}</td>
+            <td><span class="mode-badge">${e.mode || '—'}</span></td>
             <td class="debit-amt">${e.type === 'debit' ? formatAmount(e.amount) : '—'}</td>
             <td class="credit-amt">${e.type === 'credit' ? formatAmount(e.amount) : '—'}</td>
-            <td><span class="mode-badge">${e.mode || 'Cash'}</span></td>
             <td>
               <div class="action-btns">
-                <button class="tbl-btn" onclick="openEditEntry('${e.id}')">
-                  <svg viewBox="0 0 24 24" width="9" height="9"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <button class="tbl-btn" onclick="editEntry('${e.id}')">
+                  <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                   Edit
                 </button>
-                <button class="tbl-btn del" onclick="askDeleteEntry('${e.id}')">
-                  <svg viewBox="0 0 24 24" width="9" height="9"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                <button class="tbl-btn del" onclick="askDelete('${e.id}')">
+                  <svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                   Del
                 </button>
               </div>
             </td>
-          </tr>`;
-      }).join('');
+          </tr>
+        `;
+      });
 
-      document.getElementById('txTableWrap').innerHTML = `
+      wrap.innerHTML = `
         <div style="overflow-x:auto; -webkit-overflow-scrolling: touch;">
           <table class="tx-table">
             <thead>
               <tr>
-                <th>#</th><th>Date</th><th>Particular</th><th>Remarks</th>
-                <th class="right debit-col">Debit</th>
-                <th class="right credit-col">Credit</th><th>Mode</th><th>Actions</th>
+                <th style="min-width:80px;">Date</th>
+                <th>Particular</th>
+                <th style="min-width:70px;">Mode</th>
+                <th class="right debit-col" style="min-width:80px;">Debit</th>
+                <th class="right credit-col" style="min-width:80px;">Credit</th>
+                <th style="min-width:90px;">Action</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
           </table>
-        </div>`;
+        </div>
+      `;
     }
 
-    // ── ADD / EDIT ──
+    // ---------- ENTRY MODAL ----------
     function openAddEntry() {
       editEntryId = null;
       currentType = 'debit';
       document.getElementById('entryModalTitle').textContent = 'Add Transaction';
       document.getElementById('entryDate').value = todayISO();
+      document.getElementById('entryMode').value = 'Udhaar';
       document.getElementById('entryRemarks').value = '';
-      clearItems();
+      document.getElementById('itemsBody').innerHTML = '';
+      itemCounter = 0;
       addItemRow();
-      document.getElementById('grandTotal').textContent = '₹0.00';
       setType('debit');
+      updateGrandTotal();
       document.getElementById('entryModal').classList.add('open');
     }
 
-    function openEditEntry(id) {
-      if (!loadCustomer()) return;
+    function editEntry(id) {
       const e = (customer.entries || []).find(x => x.id === id);
       if (!e) return;
       editEntryId = id;
+      currentType = e.type;
       document.getElementById('entryModalTitle').textContent = 'Edit Transaction';
-      document.getElementById('entryDate').value = e.date;
-      document.getElementById('entryRemarks').value = e.remarks || '';
-      document.getElementById('entryMode').value = e.mode || 'Cash';
-      setType(e.type);
-      clearItems();
-      if (e.items && e.items.length > 0) {
-        e.items.forEach(item => {
-          const qtyDisplay = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
-          addItemRow(item.name, item.rate, qtyDisplay);
-        });
+      document.getElementById('entryDate').value = e.date ? String(e.date).slice(0, 10) : todayISO();
+      document.getElementById('entryMode').value = e.mode || 'Udhaar';
+      document.getElementById('entryRemarks').value = e.remarks || e.note || e.comment || '';
+      document.getElementById('itemsBody').innerHTML = '';
+      itemCounter = 0;
+      if (e.items && e.items.length) {
+        e.items.forEach(it => addItemRow(it.name, it.rate, it.qty));
       } else {
-        addItemRow(e.particular || 'Item', e.amount || 0, '1');
+        addItemRow(e.particular || '', e.amount, 1);
       }
+      setType(currentType);
       updateGrandTotal();
       document.getElementById('entryModal').classList.add('open');
     }
 
     function closeEntry() {
       document.getElementById('entryModal').classList.remove('open');
-      editEntryId = null;
     }
 
-    function setType(type) {
-      currentType = type;
-      document.getElementById('debitBtn').classList.toggle('active', type === 'debit');
-      document.getElementById('creditBtn').classList.toggle('active', type === 'credit');
-      const modeSelect = document.getElementById('entryMode');
-      if (type === 'debit') {
-        modeSelect.value = 'Udhaar';
-        modeSelect.disabled = true;
+    function setType(t) {
+      currentType = t;
+      const db = document.getElementById('debitBtn');
+      const cb = document.getElementById('creditBtn');
+      if (t === 'debit') {
+        db.classList.add('active');
+        cb.classList.remove('active');
       } else {
-        modeSelect.disabled = false;
-        if (modeSelect.value === 'Udhaar') modeSelect.value = 'Cash';
+        cb.classList.add('active');
+        db.classList.remove('active');
       }
     }
 
+    function addItemRow(name = '', rate = '', qty = '') {
+      itemCounter++;
+      const id = 'item_' + itemCounter;
+      const tr = document.createElement('tr');
+      tr.id = id;
+      tr.innerHTML = `
+        <td style="text-align:center;" class="row-num"></td>
+        <td><input class="item-name" type="text" placeholder="Item" value="${name || ''}"/></td>
+        <td><input class="item-rate" type="number" min="0" step="0.01" placeholder="0" value="${rate || ''}" oninput="updateGrandTotal()"/></td>
+        <td><input class="item-qty" type="text" placeholder="1" value="${qty || ''}" oninput="updateGrandTotal()"/></td>
+        <td class="item-total">₹0.00</td>
+        <td><button class="remove-item" onclick="removeItemRow('${id}')">✕</button></td>
+      `;
+      document.getElementById('itemsBody').appendChild(tr);
+      renumberRows();
+      updateGrandTotal();
+    }
+
+    function removeItemRow(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+      if (!document.getElementById('itemsBody').children.length) addItemRow();
+      renumberRows();
+      updateGrandTotal();
+    }
+
+    function renumberRows() {
+      const rows = document.getElementById('itemsBody').children;
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].querySelector('.row-num').textContent = i + 1;
+      }
+    }
+
+    function parseQty(q) {
+      if (q === undefined || q === null || q === '') return 1;
+      const n = parseFloat(String(q).replace(/[^0-9.\-]/g, ''));
+      return isNaN(n) ? 1 : n;
+    }
+
+    function updateGrandTotal() {
+      const rows = document.getElementById('itemsBody').children;
+      let total = 0;
+      for (const row of rows) {
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const qty = parseQty(row.querySelector('.item-qty').value);
+        const lineTotal = rate * qty;
+        row.querySelector('.item-total').textContent = formatAmount(lineTotal);
+        total += lineTotal;
+      }
+      document.getElementById('grandTotal').textContent = formatAmount(total);
+    }
+
+    // ---------- SAVE ----------
     async function saveEntry() {
       const date = document.getElementById('entryDate').value;
+      if (!date) { showToast('Please select a date', true); return; }
+
       const mode = document.getElementById('entryMode').value;
       const remarks = document.getElementById('entryRemarks').value.trim();
-      if (!date) { showToast('Select date', true); return; }
 
-      const { items, grandTotal } = getItemsData();
-      if (items.length === 0) { showToast('Add at least one item', true); return; }
-      if (grandTotal <= 0) { showToast('Valid amount required', true); return; }
+      const rows = document.getElementById('itemsBody').children;
+      const items = [];
+      let total = 0;
 
-      const summary = items.map(item => {
-        const displayQty = item.qtyDisplay || `${item.qty}${item.unit || ''}`;
-        return `${item.name} (${displayQty})`;
-      }).join(', ');
-
-      const data = JSON.parse(JSON.stringify(appData));
-      const idx = data.customers.findIndex(c => c.id === customerId);
-      if (idx === -1) { showToast('Customer not found', true); return; }
-      if (!data.customers[idx].entries) data.customers[idx].entries = [];
-
-      if (editEntryId) {
-        const ei = data.customers[idx].entries.findIndex(e => e.id === editEntryId);
-        if (ei !== -1) {
-          data.customers[idx].entries[ei] = {
-            ...data.customers[idx].entries[ei],
-            type: currentType, date, items, amount: grandTotal,
-            particular: summary, mode, remarks
-          };
-        } else {
-          showToast('Entry not found', true);
-          return;
-        }
-      } else {
-        data.customers[idx].entries.push({
-          id: 'e_' + Date.now(),
-          type: currentType, date, items, amount: grandTotal,
-          particular: summary, mode, remarks
+      for (const row of rows) {
+        const name = row.querySelector('.item-name').value.trim();
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const qtyRaw = row.querySelector('.item-qty').value;
+        const qty = parseQty(qtyRaw);
+        if (!name && !rate) continue;
+        const lineTotal = rate * qty;
+        total += lineTotal;
+        items.push({
+          name: name || 'Item',
+          rate,
+          qty,
+          qtyDisplay: qtyRaw || String(qty),
+          total: lineTotal
         });
       }
 
+      if (!items.length) {
+        showToast('Please add at least one item', true);
+        return;
+      }
+      if (total <= 0) {
+        showToast('Total must be greater than 0', true);
+        return;
+      }
+
+      const entry = {
+        id: editEntryId || ('e_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7)),
+        type: currentType,
+        date,
+        mode,
+        remarks,
+        items,
+        amount: total,
+        particular: items.map(i => i.name).join(', ')
+      };
+
       try {
-        await apiSaveData(data);
-        appData = data;
-        loadCustomer();
+        if (editEntryId) {
+          const idx = customer.entries.findIndex(x => x.id === editEntryId);
+          if (idx > -1) customer.entries[idx] = entry;
+        } else {
+          customer.entries = customer.entries || [];
+          customer.entries.push(entry);
+        }
+
+        await apiSaveData(appData);
         closeEntry();
-        render();
-        showToast(editEntryId ? 'Entry updated!' : 'Entry added!');
+        renderBalance();
+        renderTransactions();
+        showToast(editEntryId ? 'Entry updated' : 'Entry added');
       } catch (err) {
         console.error(err);
         showToast('Save failed', true);
       }
     }
 
-    // ── DELETE ──
-    function askDeleteEntry(id) {
+    // ---------- DELETE ----------
+    function askDelete(id) {
       deleteEntryId = id;
       document.getElementById('confirmModal').classList.add('open');
     }
     function closeConfirm() {
-      document.getElementById('confirmModal').classList.remove('open');
       deleteEntryId = null;
+      document.getElementById('confirmModal').classList.remove('open');
     }
     async function confirmDeleteEntry() {
       if (!deleteEntryId) return;
-      const data = JSON.parse(JSON.stringify(appData));
-      const idx = data.customers.findIndex(c => c.id === customerId);
-      if (idx === -1) { showToast('Customer not found', true); return; }
-      data.customers[idx].entries = (data.customers[idx].entries || []).filter(e => e.id !== deleteEntryId);
       try {
-        await apiSaveData(data);
-        appData = data;
-        loadCustomer();
+        customer.entries = (customer.entries || []).filter(e => e.id !== deleteEntryId);
+        await apiSaveData(appData);
         closeConfirm();
-        render();
+        renderBalance();
+        renderTransactions();
         showToast('Entry deleted');
       } catch (err) {
         console.error(err);
@@ -1042,60 +1040,96 @@
       }
     }
 
-    // ── UTILITIES ──
-    async function downloadBackup() {
-      try {
-        const res = await apiBackup(appData);
-        if (res && res.filename) {
-          showToast(`Backup saved: downloads/${res.filename}`);
-        } else showToast('Backup failed', true);
-      } catch (e) { showToast('Backup error', true); }
-    }
-
-    function shareWhatsApp() {
-      if (!loadCustomer()) return;
-      const c = customer;
-      const bal = getBalance(c);
-      const entries = (c.entries || []).length;
-      const msg = `Namaskar ${c.name} ji,\n\nबही खाता statement:\n📊 Entries: ${entries}\n💳 Udhaar (Dr): ₹${bal.debit.toFixed(2)}\n💰 Jama (Cr): ₹${bal.credit.toFixed(2)}\n📌 Net: ${formatAmount(bal.net)} ${bal.net > 0 ? '(Due)' : bal.net < 0 ? '(Advance)' : '(Settled)'}\n\nDhanyawad 🙏`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
+    // ---------- PRINT MODAL ----------
     function openPrintPage() {
-      window.open(`print.html?id=${customerId}`, "_blank");
+      printMode = 'full';
+      setPrintMode('full');
+      document.getElementById('printFromDate').value = '';
+      document.getElementById('printToDate').value = '';
+      document.getElementById('printModal').classList.add('open');
+    }
+    function closePrintModal() {
+      document.getElementById('printModal').classList.remove('open');
+    }
+    function setPrintMode(m) {
+      printMode = m;
+      const fb = document.getElementById('printFullBtn');
+      const rb = document.getElementById('printRangeBtn');
+      const rf = document.getElementById('printRangeFields');
+      if (m === 'full') {
+        fb.classList.add('active');
+        rb.classList.remove('active');
+        rf.style.display = 'none';
+      } else {
+        rb.classList.add('active');
+        fb.classList.remove('active');
+        rf.style.display = 'block';
+      }
+    }
+    function confirmPrint() {
+      let url = `print.html?id=${encodeURIComponent(customerId)}`;
+      if (printMode === 'range') {
+        const from = document.getElementById('printFromDate').value;
+        const to = document.getElementById('printToDate').value;
+        if (!from || !to) { showToast('Please select both dates', true); return; }
+        if (from > to) { showToast('From date cannot be after To date', true); return; }
+        url += `&from=${from}&to=${to}`;
+      }
+      window.open(url, '_blank');
+      closePrintModal();
     }
 
-    function goBack() { window.location.href = 'dashboard.html'; }
-
-    function showToast(msg, isError = false) {
-      const t = document.getElementById('toast');
-      document.getElementById('toastMsg').textContent = msg;
-      t.className = 'toast' + (isError ? ' error' : '');
-      setTimeout(() => t.classList.add('show'), 10);
-      setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // ── INIT ──
-    async function init() {
+    // ---------- BACKUP ----------
+    function downloadBackup() {
       try {
-        appData = await apiGetData();
-        if (loadCustomer()) render();
-      } catch (e) {
-        console.error(e);
-        showToast('Server connection failed', true);
+        const data = JSON.stringify(customer, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ledger_${(customer.name || 'customer').replace(/\s+/g, '_')}_${todayISO()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Backup downloaded');
+      } catch (err) {
+        console.error(err);
+        showToast('Backup failed', true);
       }
     }
 
-    ['entryModal','confirmModal'].forEach(id => {
-      document.getElementById(id).addEventListener('click', e => {
-        if (e.target === e.currentTarget) {
-          if (id === 'entryModal') closeEntry();
-          else if (id === 'confirmModal') closeConfirm();
-        }
-      });
-    });
+    // ---------- WHATSAPP ----------
+    function shareWhatsApp() {
+      const bal = getBalance(customer);
+      let msg = `*${customer.name}*\nLedger Summary\n`;
+      msg += `Debit: ${formatAmount(bal.debit)}\n`;
+      msg += `Credit: ${formatAmount(bal.credit)}\n`;
+      msg += `Net: ${formatAmount(bal.net)}`;
+      if (bal.net > 0) msg += ' (Due)';
+      else if (bal.net < 0) msg += ' (Advance)';
+      const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
+    }
 
-    init();
+    // ---------- TOAST ----------
+    let toastTimer = null;
+    function showToast(msg, isError = false) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.toggle('error', !!isError);
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ---------- NAV ----------
+    function goBack() {
+      window.location.href = 'dashboard.html';
+    }
+
+    // ---------- INIT ----------
+    loadData();
   </script>
 </body>
 </html>

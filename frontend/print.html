@@ -68,6 +68,17 @@
             font-size: 18px;
             font-weight: 600;
         }
+        .period-badge {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #eef2ff;
+            color: #1a1a2e;
+            border: 1px solid #c7d2fe;
+        }
         .info {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -157,6 +168,19 @@
             border: 0;
             border-top: 1px dashed #dce1e8;
         }
+        /* Brought-forward row */
+        .bf-row td {
+            background: #fff8e1 !important;
+            font-weight: 600;
+            font-style: italic;
+            color: #7a5b00;
+        }
+        .empty-row td {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-style: italic;
+        }
         .footer {
             margin-top: 24px;
             padding-top: 12px;
@@ -193,6 +217,11 @@
                 background: #1a1a2e !important;
                 color: #fff !important;
             }
+            .bf-row td {
+                background: #fff8e1 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
         @media screen and (max-width: 600px) {
             .sheet {
@@ -225,6 +254,8 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const customerId = params.get("id");
+        const fromDate = params.get("from"); // YYYY-MM-DD or null
+        const toDate   = params.get("to");   // YYYY-MM-DD or null
 
         let appData = {};
         let customer = null;
@@ -245,11 +276,26 @@
             });
         }
 
+        // Full (all-time) balance — used for overall status label
         function getBalance(cust) {
             const entries = cust.entries || [];
             const debit = entries.filter(e => e.type === "debit").reduce((s, e) => s + Number(e.amount), 0);
             const credit = entries.filter(e => e.type === "credit").reduce((s, e) => s + Number(e.amount), 0);
             return { debit, credit, net: debit - credit };
+        }
+
+        // Balance for a specific list of entries
+        function getEntriesBalance(entries) {
+            const debit = entries.filter(e => e.type === "debit").reduce((s, e) => s + Number(e.amount), 0);
+            const credit = entries.filter(e => e.type === "credit").reduce((s, e) => s + Number(e.amount), 0);
+            return { debit, credit, net: debit - credit };
+        }
+
+        // Compare entry date (YYYY-MM-DD) safely
+        function entryDateStr(e) {
+            if (!e.date) return "";
+            // e.date is expected to be YYYY-MM-DD; if it's ISO, slice to 10
+            return String(e.date).slice(0, 10);
         }
 
         async function initPrint() {
@@ -262,40 +308,108 @@
                 }
                 renderPrint();
             } catch (err) {
+                console.error(err);
                 document.getElementById("page").innerHTML = "<h2>Unable to load data.</h2>";
             }
         }
 
         function renderPrint() {
-            const bal = getBalance(customer);
-            const entries = (customer.entries || []).slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+            const allEntries = (customer.entries || []).slice()
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
 
+            const isRange = !!(fromDate && toDate);
+
+            // Entries BEFORE the range (used to compute B/F opening balance)
+            let beforeRange = [];
+            let inRange = allEntries;
+
+            if (isRange) {
+                beforeRange = allEntries.filter(e => entryDateStr(e) < fromDate);
+                inRange     = allEntries.filter(e => {
+                    const d = entryDateStr(e);
+                    return d >= fromDate && d <= toDate;
+                });
+            }
+
+            const overallBal = getBalance(customer);           // all-time
+            const periodBal  = getEntriesBalance(inRange);     // period totals
+            const bfBal      = getEntriesBalance(beforeRange); // brought forward
+
+            // Period label
+            const periodLabel = isRange
+                ? `Period: ${formatDate(fromDate)} – ${formatDate(toDate)}`
+                : "Full Ledger";
+
+            // Build rows
             let rows = "";
-            entries.forEach((e, index) => {
-                let particular = "";
-                let remarks = e.remarks || e.note || e.comment || "";
-                
-                if (e.items && e.items.length) {
-                    particular = e.items.map(item => {
-                        const qty = item.qtyDisplay || `${item.qty}${item.unit || ""}`;
-                        return `<div class="item-detail"><b>${item.name}</b> (${qty} × ₹${Number(item.rate).toFixed(2)})</div>`;
-                    }).join("<hr>");
-                } else {
-                    particular = e.particular || "-";
-                }
 
+            // B/F row (only in range mode, and only if there was prior balance)
+            if (isRange && (bfBal.debit > 0 || bfBal.credit > 0)) {
                 rows += `
-                    <tr>
-                        <td class="center">${index + 1}</td>
-                        <td>${formatDate(e.date)}</td>
-                        <td>${particular}</td>
-                        <td>${remarks || "-"}</td>
-                        <td class="right">${e.type === "debit" ? formatAmount(e.amount) : ""}</td>
-                        <td class="right">${e.type === "credit" ? formatAmount(e.amount) : ""}</td>
-                        <td class="center">${e.mode || "-"}</td>
+                    <tr class="bf-row">
+                        <td class="center">—</td>
+                        <td>${formatDate(fromDate)}</td>
+                        <td colspan="2"><b>Brought Forward (B/F)</b></td>
+                        <td class="right">${bfBal.net > 0 ? formatAmount(bfBal.net) : ""}</td>
+                        <td class="right">${bfBal.net < 0 ? formatAmount(bfBal.net) : ""}</td>
+                        <td class="center">—</td>
                     </tr>
                 `;
-            });
+            }
+
+            if (inRange.length === 0) {
+                rows += `
+                    <tr class="empty-row">
+                        <td colspan="7">No entries found for this period.</td>
+                    </tr>
+                `;
+            } else {
+                inRange.forEach((e, index) => {
+                    let particular = "";
+                    let remarks = e.remarks || e.note || e.comment || "";
+
+                    if (e.items && e.items.length) {
+                        particular = e.items.map(item => {
+                            const qty = item.qtyDisplay || `${item.qty}${item.unit || ""}`;
+                            return `<div class="item-detail"><b>${item.name}</b> (${qty} × ₹${Number(item.rate).toFixed(2)})</div>`;
+                        }).join("<hr>");
+                    } else {
+                        particular = e.particular || "-";
+                    }
+
+                    rows += `
+                        <tr>
+                            <td class="center">${index + 1}</td>
+                            <td>${formatDate(e.date)}</td>
+                            <td>${particular}</td>
+                            <td>${remarks || "-"}</td>
+                            <td class="right">${e.type === "debit" ? formatAmount(e.amount) : ""}</td>
+                            <td class="right">${e.type === "credit" ? formatAmount(e.amount) : ""}</td>
+                            <td class="center">${e.mode || "-"}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Closing balance (B/F + period net) — useful in range mode
+            const closingBal = {
+                debit: bfBal.debit + periodBal.debit,
+                credit: bfBal.credit + periodBal.credit,
+                net: (bfBal.debit + periodBal.debit) - (bfBal.credit + periodBal.credit)
+            };
+
+            // Status label
+            const statusText = overallBal.net > 0
+                ? "🔴 Due"
+                : overallBal.net < 0
+                    ? "🟢 Advance"
+                    : "⚪ Settled";
+
+            // Summary cards change label based on mode
+            const summaryTitle1 = isRange ? "Period Debit" : "Total Debit";
+            const summaryTitle2 = isRange ? "Period Credit" : "Total Credit";
+            const summaryTitle3 = isRange ? "Closing Balance" : "Net Balance";
+            const summaryValue3 = isRange ? closingBal.net : overallBal.net;
 
             document.getElementById("page").innerHTML = `
                 <div class="sheet">
@@ -307,6 +421,7 @@
                         <div class="statement">
                             <h2>Statement</h2>
                             <p>${new Date().toLocaleDateString("en-IN")}</p>
+                            <span class="period-badge">${periodLabel}</span>
                         </div>
                     </div>
 
@@ -319,24 +434,24 @@
                         </div>
                         <div class="box">
                             <h3>📊 Account Summary</h3>
-                            <p><b>Total Entries :</b> ${entries.length}</p>
-                            <p><b>Status :</b> ${bal.net > 0 ? "🔴 Due" : bal.net < 0 ? "🟢 Advance" : "⚪ Settled"}</p>
-                            <p><b>Balance :</b> ${formatAmount(bal.net)}</p>
+                            <p><b>Entries in view :</b> ${inRange.length}${isRange ? ` / ${allEntries.length}` : ""}</p>
+                            <p><b>Overall Status :</b> ${statusText}</p>
+                            <p><b>Overall Balance :</b> ${formatAmount(overallBal.net)}</p>
                         </div>
                     </div>
 
                     <div class="summary">
                         <div class="card">
-                            <h4>Total Debit</h4>
-                            <h2 class="dr">${formatAmount(bal.debit)}</h2>
+                            <h4>${summaryTitle1}</h4>
+                            <h2 class="dr">${formatAmount(periodBal.debit)}</h2>
                         </div>
                         <div class="card">
-                            <h4>Total Credit</h4>
-                            <h2 class="cr">${formatAmount(bal.credit)}</h2>
+                            <h4>${summaryTitle2}</h4>
+                            <h2 class="cr">${formatAmount(periodBal.credit)}</h2>
                         </div>
                         <div class="card">
-                            <h4>Net Balance</h4>
-                            <h2 class="net">${formatAmount(bal.net)}</h2>
+                            <h4>${summaryTitle3}</h4>
+                            <h2 class="net">${formatAmount(summaryValue3)}</h2>
                         </div>
                     </div>
 
